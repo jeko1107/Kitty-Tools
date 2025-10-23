@@ -27,7 +27,7 @@ menu_items = [
     {"id":"flood","label":"Kahoot Flooder","description":"Kahoot Flooder (habilitado en UI: ver comandos seguros)","enabled":True},
     {"id":"answers","label":"Answer Hack","description":"Answer Hack (habilitado en UI: ver comandos seguros)","enabled":True},
     {"id":"graphical","label":"GUI","description":"Interfaz gráfica (habilitado en UI: ver comandos seguros)","enabled":True},
-    {"id":"exit","label":"Exit","description":"Salir de la aplicación (no aplica en web)","enabled":True},
+    {"id":"logout","label":"Exit","description":"Salir de la aplicación (no aplica en web)","enabled":True},
 ]
 
 howto_text = (
