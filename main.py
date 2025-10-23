@@ -459,59 +459,78 @@ def main():
         # If mode is specified, execute directly without menu
         if args.mode:
             if args.mode == 'flood':
-                # Execute flood with automatic responses
-                print(f"🌊 Kahoot Flooder - Iniciado")
+                # Execute REAL flood connecting to Kahoot
+                print(f"🌊 Kahoot Flooder - Iniciado (MODO REAL)")
                 print(f"═" * 60)
                 print(f"")
                 print(f"📋 Configuración:")
-                print(f"   PIN del juego:     {args.pin or '(no especificado - usa 1234567)'}")
+                print(f"   PIN del juego:     {args.pin or '(no especificado)'}")
                 print(f"   Número de bots:    {args.n or 50}")
                 print(f"   Latencia mínima:   {args.minlat or 50}ms")
                 print(f"   Latencia máxima:   {args.maxlat or 300}ms")
                 print(f"")
                 print(f"{'─' * 60}")
                 print(f"")
-                print(f"🚀 EJECUTANDO FLOOD...")
-                print(f"")
                 
-                # Check if Node.js is available
+                # Check Node.js
                 try:
                     node_check = subprocess.run(['node', '--version'], capture_output=True, text=True, timeout=2)
                     if node_check.returncode == 0:
                         print(f"✅ Node.js detectado: {node_check.stdout.strip()}")
                     else:
-                        print(f"⚠️  Node.js no disponible")
+                        print(f"❌ Node.js no disponible - requerido para flood real")
+                        return
                 except:
-                    print(f"⚠️  Node.js no disponible")
+                    print(f"❌ Node.js no disponible - requerido para flood real")
+                    return
                 
                 print(f"")
-                print(f"📡 Preparando conexión al juego Kahoot...")
+                print(f"� EJECUTANDO FLOOD REAL CON NODE.JS...")
                 print(f"")
                 
-                # Simulate bot deployment  
-                bots_to_show = min(args.n or 50, 15)
-                for i in range(bots_to_show):
-                    bot_name = f"{args.name or 'Bot'}_{i+1:03d}"
-                    delay = (args.minlat or 50) + (i * 20)
-                    print(f"   ✓ {bot_name:<20} conectado ({delay}ms)")
+                # Prepare flood.js execution with automatic answers
+                flood_js_path = Path(__file__).parent / 'Kitty' / 'Flood' / 'flood.js'
                 
-                remaining = (args.n or 50) - bots_to_show
-                if remaining > 0:
-                    print(f"   ...")
-                    print(f"   ✓ {remaining} bots adicionales conectados")
+                if not flood_js_path.exists():
+                    print(f"❌ Error: flood.js no encontrado en {flood_js_path}")
+                    return
                 
-                print(f"")
-                print(f"{'─' * 60}")
-                print(f"")
-                print(f"✅ FLOOD COMPLETADO")
-                print(f"")
-                print(f"📊 Resumen:")
-                print(f"   Total de bots:     {args.n or 50}")
-                print(f"   Estado:            Activos")
-                print(f"   PIN del juego:     {args.pin or '1234567'}")
-                print(f"")
-                print(f"🎮 Los bots están listos para responder preguntas")
-                print(f"")
+                # Create input for flood.js (automatic mode)
+                # Format: antibot(y/n), pin, number, minDelay, maxDelay, name
+                auto_input = f"n\n{args.pin or '1234567'}\n{args.n or 50}\n{args.minlat or 50}\n{args.maxlat or 300}\n{args.name or 'Bot'}\n"
+                
+                try:
+                    # Execute flood.js with automatic input
+                    process = subprocess.Popen(
+                        ['node', str(flood_js_path)],
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT,
+                        text=True,
+                        bufsize=1,
+                        cwd=flood_js_path.parent
+                    )
+                    
+                    # Send automatic responses
+                    stdout, _ = process.communicate(input=auto_input, timeout=120)
+                    
+                    # Print output
+                    print(stdout)
+                    
+                    if process.returncode == 0:
+                        print(f"")
+                        print(f"✅ FLOOD COMPLETADO EXITOSAMENTE")
+                    else:
+                        print(f"")
+                        print(f"⚠️  Flood finalizado con código: {process.returncode}")
+                    
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    print(f"")
+                    print(f"⏱️  Timeout - Flood ejecutándose por más de 120s (proceso terminado)")
+                except Exception as e:
+                    print(f"")
+                    print(f"❌ Error ejecutando flood: {str(e)}")
                 
                 return
                     

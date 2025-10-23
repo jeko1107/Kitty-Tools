@@ -5,7 +5,7 @@
   "main": "flood.js",
   "dependencies": {
     "readline-sync": "1.4.10",
-    "kahoot.js-updated": "3.1.2",
+    "kahoot.js-updated": "^4.0.0",
     "an-array-of-english-words": "2.0.0",
     "request": "2.88.2",
     "random-name": "0.1.2",
