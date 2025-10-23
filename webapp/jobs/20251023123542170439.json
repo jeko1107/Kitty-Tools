@@ -1,0 +1,17 @@
+{
+  "id": "20251023123542170439",
+  "type": "flood",
+  "params": {
+    "n": "5",
+    "pin": "1234567",
+    "minlat": "50",
+    "maxlat": "100"
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T12:35:42.170496Z",
+  "status": "success",
+  "result": {
+    "output": "\ud83c\udf0a Kahoot Flooder - Iniciado\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:     1234567\n   N\u00famero de bots:    5\n   Latencia m\u00ednima:   50ms\n   Latencia m\u00e1xima:   100ms\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\ud83d\ude80 EJECUTANDO FLOOD...\n\n\u2705 Node.js detectado: v22.17.0\n\n\ud83d\udce1 Preparando conexi\u00f3n al juego Kahoot...\n\n   \u2713 Bot_001              conectado (50ms)\n   \u2713 Bot_002              conectado (70ms)\n   \u2713 Bot_003              conectado (90ms)\n   \u2713 Bot_004              conectado (110ms)\n   \u2713 Bot_005              conectado (130ms)\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u2705 FLOOD COMPLETADO\n\n\ud83d\udcca Resumen:\n   Total de bots:     5\n   Estado:            Activos\n   PIN del juego:     1234567\n\n\ud83c\udfae Los bots est\u00e1n listos para responder preguntas\n\n",
+    "log": "20251023123542170439.log"
+  }
+}

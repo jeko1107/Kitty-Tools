@@ -165,13 +165,12 @@
 
         <h3 style="color:#94a3b8;margin-top:2rem">Log de Eventos</h3>
         <div style="max-height:400px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px;font-family:monospace;font-size:0.85rem">
-          {% for evt in job.result.log %}
-            <div style="padding:0.5rem;border-bottom:1px solid #334155;color:#e2e8f0">
-              <span style="color:#64748b">{{ "%.3f"|format(evt.timestamp) }}</span>
-              <span style="color:#60a5fa;margin:0 0.5rem">{{ evt.event }}</span>
-              <span style="color:#94a3b8">{{ evt.detail }}</span>
-            </div>
-          {% endfor %}
+          {% if job.result.log %}
+            <p>Log: <a href="{{ url_for('download_log', jobid=job.id) }}">Descargar</a></p>
+            <pre>{{ job.result.output }}</pre>
+          {% else %}
+            <pre>{{ job.result.output }}</pre>
+          {% endif %}
         </div>
       </div>
     {% endif %}

@@ -2,6 +2,7 @@
 from flask import Flask, render_template, url_for
 from flask import request, redirect, session, flash, send_file
 from functools import wraps
+import threading
 import platform
 import sys
 import os
@@ -358,37 +359,100 @@ def admin_simulate():
     # SIEMPRE usar el main.py del directorio raíz (no el de src)
     main_path = os.path.join(repo_root, 'main.py')
 
-    try:
-        cmd = [sys.executable, main_path, '--mode', sim_type]
-        for k, v in params.items():
-            cmd.extend([f'--{k}', v])
-        
-        # Ejecutar con timeout más largo (120 segundos para flood)
-        timeout = 120 if sim_type == 'flood' else 60
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
-        output = result.stdout + result.stderr
-        status = 'success' if result.returncode == 0 or result.returncode is None else 'error'
-    except subprocess.TimeoutExpired:
-        output = f"✅ Ejecución en progreso (timeout de {timeout}s alcanzado)\n\nLos bots están activos y continuarán ejecutándose en segundo plano."
-        status = 'success'
-    except Exception as e:
-        output = f"Error al ejecutar main.py: {str(e)}"
-        status = 'error'
-
+    # Crear job en estado running y lanzar proceso en background
     job = {
         'id': datetime.utcnow().strftime('%Y%m%d%H%M%S%f'),
         'type': sim_type,
         'params': params,
         'user': session.get('user'),
         'created_at': datetime.utcnow().isoformat() + 'Z',
-        'status': status,
-        'result': {'output': output}
+        'status': 'running',
+        'result': {'output': ''}
     }
+
+    # Guardar job inicial
     out = os.path.join(JOBS_DIR, f"{job['id']}.json")
     with open(out, 'w', encoding='utf-8') as fh:
         json.dump(job, fh, indent=2)
-    flash('Ejecución completada y registrada', 'success')
+
+    # Preparar comando
+    cmd = [sys.executable, main_path, '--mode', sim_type]
+    for k, v in params.items():
+        cmd.extend([f'--{k}', v])
+
+    log_path = os.path.join(JOBS_DIR, f"{job['id']}.log")
+
+    try:
+        # Iniciar proceso en background y redirigir salida a archivo
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, cwd=repo_root)
+
+        # Worker que hace streaming del stdout al log y actualiza el JSON del job
+        def stream_and_finalize(proc, log_path, job_json_path, jobid):
+            try:
+                with open(log_path, 'w', encoding='utf-8') as logf:
+                    if proc.stdout:
+                        for line in iter(proc.stdout.readline, ''):
+                            if line == '':
+                                break
+                            logf.write(line)
+                            logf.flush()
+                            # actualización parcial del job
+                            try:
+                                with open(job_json_path, 'r', encoding='utf-8') as jf:
+                                    j = json.load(jf)
+                            except Exception:
+                                j = None
+                            if j is not None:
+                                prev = j.get('result', {}).get('output', '')
+                                j.setdefault('result', {})['output'] = prev + line
+                                with open(job_json_path, 'w', encoding='utf-8') as jf:
+                                    json.dump(j, jf, indent=2)
+
+                ret = proc.wait()
+                with open(log_path, 'r', encoding='utf-8') as logf2:
+                    output = logf2.read()
+                status_final = 'success' if ret == 0 else 'error'
+            except Exception as e:
+                output = f"Error during execution: {e}"
+                status_final = 'error'
+
+            # Actualizar job final
+            try:
+                with open(job_json_path, 'r', encoding='utf-8') as jf:
+                    j = json.load(jf)
+            except Exception:
+                j = {}
+            j['status'] = status_final
+            j['result'] = {'output': output, 'log': os.path.basename(log_path)}
+            with open(job_json_path, 'w', encoding='utf-8') as jf:
+                json.dump(j, jf, indent=2)
+
+        # Lanzar worker daemon para no bloquear la petición
+        t = threading.Thread(target=stream_and_finalize, args=(proc, log_path, out, job['id']), daemon=True)
+        t.start()
+
+    except Exception as e:
+        output = f"Error al iniciar proceso en background: {str(e)}"
+        job['status'] = 'error'
+        job['result'] = {'output': output}
+        with open(out, 'w', encoding='utf-8') as fh:
+            json.dump(job, fh, indent=2)
+
+        flash('Error al iniciar la ejecución', 'danger')
+        return redirect(url_for('admin'))
+
+    flash('Ejecución iniciada y registrada (ver historial para salida)', 'success')
     return redirect(url_for('view_job', jobid=job['id']))
+
+
+@app.route('/admin/download_log/<jobid>')
+@login_required
+def download_log(jobid):
+    path = os.path.join(JOBS_DIR, f"{jobid}.log")
+    if os.path.isfile(path):
+        return send_file(path, as_attachment=True)
+    flash('Log no encontrado', 'danger')
+    return redirect(url_for('view_job', jobid=jobid))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

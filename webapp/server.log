@@ -1,3 +1,4 @@
+nohup: ignoring input
  * Serving Flask app 'app'
  * Debug mode: on
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
@@ -7,4 +8,123 @@
 [33mPress CTRL+C to quit[0m
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 387-197-350
+ * Debugger PIN: 548-918-959
+127.0.0.1 - - [23/Oct/2025 12:33:36] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:33:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [23/Oct/2025 12:33:37] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:34:22] "GET /status HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:34:44] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:34:58] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:35:00] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:35:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 12:35:14] "[31m[1mPOST /admin HTTP/1.1[0m" 405 -
+127.0.0.1 - - [23/Oct/2025 12:35:16] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:35:38] "GET /admin HTTP/1.1" 200 -
+/workspaces/Kitty-Tools/webapp/app.py:364: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'id': datetime.utcnow().strftime('%Y%m%d%H%M%S%f'),
+/workspaces/Kitty-Tools/webapp/app.py:368: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'created_at': datetime.utcnow().isoformat() + 'Z',
+127.0.0.1 - - [23/Oct/2025 12:35:42] "[32mPOST /admin/simulate HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 12:36:20] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:28] "[35m[1mGET /admin/view_job/20251023123542170439 HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/webapp/app.py", line 74, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/webapp/app.py", line 321, in view_job
+    return render_template('view_job.html', job=job)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/workspaces/Kitty-Tools/webapp/templates/view_job.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/workspaces/Kitty-Tools/webapp/templates/base.html", line 37, in top-level template code
+    {% block content %}{% endblock %}
+  File "/workspaces/Kitty-Tools/webapp/templates/view_job.html", line 56, in block 'content'
+    <div style="color:{{ '#fca5a5' if job.result.errors > 0 else '#86efac' }};font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.errors }}</div>
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'errors'
+127.0.0.1 - - [23/Oct/2025 12:36:28] "GET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:28] "GET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:29] "GET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=console.png&s=DmlQUR5ZTPm4XrIjoKvh HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:29] "GET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:30] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:31] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:33] "[35m[1mGET /admin/view_job/20251023123542170439 HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/webapp/app.py", line 74, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/webapp/app.py", line 321, in view_job
+    return render_template('view_job.html', job=job)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/workspaces/Kitty-Tools/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/workspaces/Kitty-Tools/webapp/templates/view_job.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/workspaces/Kitty-Tools/webapp/templates/base.html", line 37, in top-level template code
+    {% block content %}{% endblock %}
+  File "/workspaces/Kitty-Tools/webapp/templates/view_job.html", line 56, in block 'content'
+    <div style="color:{{ '#fca5a5' if job.result.errors > 0 else '#86efac' }};font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.errors }}</div>
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'errors'
+127.0.0.1 - - [23/Oct/2025 12:36:34] "[36mGET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [23/Oct/2025 12:36:34] "[36mGET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [23/Oct/2025 12:36:34] "[36mGET /admin/view_job/20251023123542170439?__debugger__=yes&cmd=resource&f=console.png&s=DmlQUR5ZTPm4XrIjoKvh HTTP/1.1[0m" 304 -
+127.0.0.1 - - [23/Oct/2025 12:36:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:36:37] "GET /status HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:37:08] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:37:08] "[32mGET /admin HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 12:37:08] "GET /status HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:37:20] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 12:37:23] "GET / HTTP/1.1" 200 -
