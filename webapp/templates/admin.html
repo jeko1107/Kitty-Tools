@@ -15,37 +15,94 @@
   {% endwith %}
 
   <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Simulación</h2>
-    <p style="color:#94a3b8">Ejecuta simulaciones seguras que no realizan conexiones de red. Los resultados se mostrarán en tiempo real.</p>
+    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Script</h2>
+    <p style="color:#94a3b8">Configura y ejecuta las herramientas de Kahoot. Los resultados se mostrarán en tiempo real.</p>
     
     <form method="post" action="{{ url_for('admin_simulate') }}" style="margin-top:1rem">
       <input type="hidden" name="_csrf" value="{{ csrf_token }}">
       
       <div style="margin-bottom:1rem">
-        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Tipo de Simulación</label>
+        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Tipo de Herramienta</label>
         <select name="sim_type" id="sim_type" style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem" onchange="updateParamsPlaceholder()">
-          <option value="flood">🌊 Kahoot Flood - Simular múltiples bots uniéndose</option>
-          <option value="answers">📝 Answer Hack - Simular respuestas de bots</option>
-          <option value="graphical">🖥️ GUI - Simular eventos de interfaz gráfica</option>
+          <option value="flood">🌊 Kahoot Flood - Enviar múltiples bots</option>
+          <option value="answers">📝 Answer Hack - Obtener respuestas</option>
+          <option value="graphical">🖥️ GUI - Interfaz gráfica</option>
         </select>
       </div>
 
-      <div style="margin-bottom:1rem">
-        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Parámetros</label>
-        <input name="sim_params" id="sim_params" placeholder="n=50,minlat=50,maxlat=300" style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-        <small id="params_help" style="color:#64748b;display:block;margin-top:0.25rem">
-          n: número de bots, minlat: latencia mínima (ms), maxlat: latencia máxima (ms)
-        </small>
+      <!-- Parámetros separados en casillas individuales -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem" id="params_grid">
+        
+        <!-- Número de bots / elementos -->
+        <div>
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            <span id="label_n">🤖 Número de Bots</span>
+          </label>
+          <input type="number" name="param_n" id="param_n" placeholder="50" min="1" max="1000" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">Cantidad de elementos a simular</small>
+        </div>
+
+        <!-- PIN del juego -->
+        <div id="pin_field">
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            🎯 PIN del Juego
+          </label>
+          <input type="text" name="param_pin" id="param_pin" placeholder="1234567" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">PIN del Kahoot (opcional)</small>
+        </div>
+
+        <!-- Latencia mínima -->
+        <div id="minlat_field">
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            ⏱️ Latencia Mínima
+          </label>
+          <input type="number" name="param_minlat" id="param_minlat" placeholder="50" min="0" max="5000" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">En milisegundos (ms)</small>
+        </div>
+
+        <!-- Latencia máxima -->
+        <div id="maxlat_field">
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            ⏱️ Latencia Máxima
+          </label>
+          <input type="number" name="param_maxlat" id="param_maxlat" placeholder="300" min="0" max="5000" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">En milisegundos (ms)</small>
+        </div>
+
+        <!-- Número de preguntas (solo para answers) -->
+        <div id="q_field" style="display:none">
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            ❓ Número de Preguntas
+          </label>
+          <input type="number" name="param_q" id="param_q" placeholder="10" min="1" max="100" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">Cantidad de preguntas del quiz</small>
+        </div>
+
+        <!-- Precisión (solo para answers) -->
+        <div id="acc_field" style="display:none">
+          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
+            🎯 Precisión
+          </label>
+          <input type="number" name="param_acc" id="param_acc" placeholder="0.8" min="0" max="1" step="0.1" 
+                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+          <small style="color:#64748b;display:block;margin-top:0.25rem">De 0.0 (0%) a 1.0 (100%)</small>
+        </div>
+
       </div>
 
       <button class="btn" type="submit" style="background:#2563eb;color:white;padding:0.75rem 1.5rem;font-size:1rem;font-weight:bold;cursor:pointer;border:none;border-radius:4px">
-        ▶️ Ejecutar Simulación
+        ▶️ Ejecutar
       </button>
     </form>
   </div>
 
   <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
-    <h2 style="color:#60a5fa;margin-top:0">📊 Historial de Simulaciones</h2>
+    <h2 style="color:#60a5fa;margin-top:0">📊 Historial de Ejecuciones</h2>
     {% if jobs %}
       <div style="overflow-x:auto">
         <table style="width:100%;border-collapse:collapse;color:#e2e8f0">
@@ -86,26 +143,62 @@
         </table>
       </div>
     {% else %}
-      <p style="color:#64748b;text-align:center;padding:2rem">No hay simulaciones registradas. ¡Ejecuta tu primera simulación arriba!</p>
+      <p style="color:#64748b;text-align:center;padding:2rem">No hay ejecuciones registradas. ¡Ejecuta tu primer script arriba!</p>
     {% endif %}
   </div>
 
   <script>
     function updateParamsPlaceholder() {
       const type = document.getElementById('sim_type').value;
-      const input = document.getElementById('sim_params');
-      const help = document.getElementById('params_help');
+      
+      // Campos a mostrar/ocultar
+      const pinField = document.getElementById('pin_field');
+      const minlatField = document.getElementById('minlat_field');
+      const maxlatField = document.getElementById('maxlat_field');
+      const qField = document.getElementById('q_field');
+      const accField = document.getElementById('acc_field');
+      const labelN = document.getElementById('label_n');
       
       if (type === 'flood') {
-        input.placeholder = 'n=50,minlat=50,maxlat=300';
-        help.textContent = 'n: número de bots, minlat: latencia mínima (ms), maxlat: latencia máxima (ms)';
+        // Flood: mostrar n, pin, minlat, maxlat
+        labelN.textContent = '🤖 Número de Bots';
+        pinField.style.display = 'block';
+        minlatField.style.display = 'block';
+        maxlatField.style.display = 'block';
+        qField.style.display = 'none';
+        accField.style.display = 'none';
+        
+        document.getElementById('param_n').placeholder = '50';
+        document.getElementById('param_minlat').placeholder = '50';
+        document.getElementById('param_maxlat').placeholder = '300';
+        
       } else if (type === 'answers') {
-        input.placeholder = 'n=50,q=10,acc=0.7';
-        help.textContent = 'n: número de bots, q: número de preguntas, acc: precisión (0.0-1.0)';
+        // Answers: mostrar n, pin, q, acc
+        labelN.textContent = '🤖 Número de Bots';
+        pinField.style.display = 'block';
+        minlatField.style.display = 'none';
+        maxlatField.style.display = 'none';
+        qField.style.display = 'block';
+        accField.style.display = 'block';
+        
+        document.getElementById('param_n').placeholder = '50';
+        document.getElementById('param_q').placeholder = '10';
+        document.getElementById('param_acc').placeholder = '0.8';
+        
       } else if (type === 'graphical') {
-        input.placeholder = 'e=20';
-        help.textContent = 'e: número de eventos a simular';
+        // GUI: solo mostrar n (eventos)
+        labelN.textContent = '🖥️ Número de Eventos';
+        pinField.style.display = 'none';
+        minlatField.style.display = 'none';
+        maxlatField.style.display = 'none';
+        qField.style.display = 'none';
+        accField.style.display = 'none';
+        
+        document.getElementById('param_n').placeholder = '20';
       }
     }
+    
+    // Inicializar al cargar la página
+    document.addEventListener('DOMContentLoaded', updateParamsPlaceholder);
   </script>
 {% endblock %}

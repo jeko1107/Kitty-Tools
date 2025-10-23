@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Menú principal (versión web segura)</h1>
-  <p>Esta página muestra las opciones del `main.py`. Las acciones que implican abuso o cheating están deshabilitadas en la web.</p>
+  <h1>Menú principal</h1>
+  <p>Herramientas de Kahoot disponibles desde la interfaz web.</p>
+
+  <!-- Botón destacado al panel de admin -->
+  <div class="card" style="background:linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);border:2px solid #60a5fa;margin-bottom:2rem">
+    <h2 style="color:#fff;margin-top:0;display:flex;align-items:center;gap:0.5rem">
+      ⚙️ Panel de Administración
+    </h2>
+    <p style="color:#dbeafe;font-size:1.1rem">Ejecuta scripts de Kahoot con parámetros personalizados desde una interfaz visual moderna.</p>
+    <a class="btn" href="{{ url_for('admin') }}" style="background:#fff;color:#1e3a8a;font-weight:bold;font-size:1.1rem;padding:0.75rem 2rem;display:inline-block;margin-top:0.5rem">
+      🚀 Ir al Panel de Admin
+    </a>
+  </div>
 
   {% for item in menu_items %}
     <div class="card {% if not item.enabled %}disabled{% endif %}">
@@ -10,8 +21,7 @@
       {% if item.enabled %}
         <a class="btn" href="{{ url_for(item.id) }}">Abrir</a>
       {% else %}
-        <span class="btn" style="background:#444">Deshabilitado</span>
-        <small style="margin-left:1rem;color:#94a3b8">Deshabilitado por seguridad en la interfaz web</small>
+        <span class="btn" style="background:#444">No disponible</span>
       {% endif %}
     </div>
   {% endfor %}

@@ -1,0 +1,318 @@
+{
+  "id": "20251023111900588603",
+  "type": "flood",
+  "params": {},
+  "user": "admin",
+  "created_at": "2025-10-23T11:19:00.588624Z",
+  "status": "simulated",
+  "result": {
+    "type": "flood",
+    "n_bots": 50,
+    "min_latency_ms": 50,
+    "max_latency_ms": 300,
+    "elapsed_s": 0.0,
+    "bots": [
+      {
+        "name": "bot_001",
+        "join_delay_s": 0.243,
+        "response_time_s": 0.237,
+        "status": "ok"
+      },
+      {
+        "name": "bot_002",
+        "join_delay_s": 0.072,
+        "response_time_s": 0.114,
+        "status": "ok"
+      },
+      {
+        "name": "bot_003",
+        "join_delay_s": 0.171,
+        "response_time_s": 0.131,
+        "status": "ok"
+      },
+      {
+        "name": "bot_004",
+        "join_delay_s": 0.24,
+        "response_time_s": 0.188,
+        "status": "ok"
+      },
+      {
+        "name": "bot_005",
+        "join_delay_s": 0.067,
+        "response_time_s": 0.231,
+        "status": "ok"
+      },
+      {
+        "name": "bot_006",
+        "join_delay_s": 0.094,
+        "response_time_s": 0.176,
+        "status": "ok"
+      },
+      {
+        "name": "bot_007",
+        "join_delay_s": 0.282,
+        "response_time_s": 0.12,
+        "status": "ok"
+      },
+      {
+        "name": "bot_008",
+        "join_delay_s": 0.066,
+        "response_time_s": 0.081,
+        "status": "ok"
+      },
+      {
+        "name": "bot_009",
+        "join_delay_s": 0.106,
+        "response_time_s": 0.111,
+        "status": "error"
+      },
+      {
+        "name": "bot_010",
+        "join_delay_s": 0.23,
+        "response_time_s": 0.284,
+        "status": "ok"
+      },
+      {
+        "name": "bot_011",
+        "join_delay_s": 0.125,
+        "response_time_s": 0.249,
+        "status": "ok"
+      },
+      {
+        "name": "bot_012",
+        "join_delay_s": 0.169,
+        "response_time_s": 0.291,
+        "status": "ok"
+      },
+      {
+        "name": "bot_013",
+        "join_delay_s": 0.141,
+        "response_time_s": 0.133,
+        "status": "ok"
+      },
+      {
+        "name": "bot_014",
+        "join_delay_s": 0.195,
+        "response_time_s": 0.202,
+        "status": "ok"
+      },
+      {
+        "name": "bot_015",
+        "join_delay_s": 0.264,
+        "response_time_s": 0.29,
+        "status": "ok"
+      },
+      {
+        "name": "bot_016",
+        "join_delay_s": 0.281,
+        "response_time_s": 0.203,
+        "status": "ok"
+      },
+      {
+        "name": "bot_017",
+        "join_delay_s": 0.237,
+        "response_time_s": 0.21,
+        "status": "ok"
+      },
+      {
+        "name": "bot_018",
+        "join_delay_s": 0.079,
+        "response_time_s": 0.172,
+        "status": "ok"
+      },
+      {
+        "name": "bot_019",
+        "join_delay_s": 0.262,
+        "response_time_s": 0.115,
+        "status": "ok"
+      },
+      {
+        "name": "bot_020",
+        "join_delay_s": 0.203,
+        "response_time_s": 0.147,
+        "status": "ok"
+      },
+      {
+        "name": "bot_021",
+        "join_delay_s": 0.139,
+        "response_time_s": 0.157,
+        "status": "ok"
+      },
+      {
+        "name": "bot_022",
+        "join_delay_s": 0.15,
+        "response_time_s": 0.284,
+        "status": "ok"
+      },
+      {
+        "name": "bot_023",
+        "join_delay_s": 0.132,
+        "response_time_s": 0.236,
+        "status": "ok"
+      },
+      {
+        "name": "bot_024",
+        "join_delay_s": 0.295,
+        "response_time_s": 0.16,
+        "status": "ok"
+      },
+      {
+        "name": "bot_025",
+        "join_delay_s": 0.188,
+        "response_time_s": 0.063,
+        "status": "ok"
+      },
+      {
+        "name": "bot_026",
+        "join_delay_s": 0.125,
+        "response_time_s": 0.206,
+        "status": "ok"
+      },
+      {
+        "name": "bot_027",
+        "join_delay_s": 0.094,
+        "response_time_s": 0.248,
+        "status": "ok"
+      },
+      {
+        "name": "bot_028",
+        "join_delay_s": 0.294,
+        "response_time_s": 0.194,
+        "status": "ok"
+      },
+      {
+        "name": "bot_029",
+        "join_delay_s": 0.075,
+        "response_time_s": 0.232,
+        "status": "ok"
+      },
+      {
+        "name": "bot_030",
+        "join_delay_s": 0.119,
+        "response_time_s": 0.242,
+        "status": "ok"
+      },
+      {
+        "name": "bot_031",
+        "join_delay_s": 0.225,
+        "response_time_s": 0.171,
+        "status": "ok"
+      },
+      {
+        "name": "bot_032",
+        "join_delay_s": 0.173,
+        "response_time_s": 0.084,
+        "status": "ok"
+      },
+      {
+        "name": "bot_033",
+        "join_delay_s": 0.297,
+        "response_time_s": 0.2,
+        "status": "ok"
+      },
+      {
+        "name": "bot_034",
+        "join_delay_s": 0.212,
+        "response_time_s": 0.267,
+        "status": "ok"
+      },
+      {
+        "name": "bot_035",
+        "join_delay_s": 0.128,
+        "response_time_s": 0.205,
+        "status": "ok"
+      },
+      {
+        "name": "bot_036",
+        "join_delay_s": 0.194,
+        "response_time_s": 0.187,
+        "status": "ok"
+      },
+      {
+        "name": "bot_037",
+        "join_delay_s": 0.068,
+        "response_time_s": 0.234,
+        "status": "error"
+      },
+      {
+        "name": "bot_038",
+        "join_delay_s": 0.076,
+        "response_time_s": 0.25,
+        "status": "ok"
+      },
+      {
+        "name": "bot_039",
+        "join_delay_s": 0.112,
+        "response_time_s": 0.102,
+        "status": "ok"
+      },
+      {
+        "name": "bot_040",
+        "join_delay_s": 0.253,
+        "response_time_s": 0.096,
+        "status": "ok"
+      },
+      {
+        "name": "bot_041",
+        "join_delay_s": 0.064,
+        "response_time_s": 0.278,
+        "status": "ok"
+      },
+      {
+        "name": "bot_042",
+        "join_delay_s": 0.111,
+        "response_time_s": 0.269,
+        "status": "ok"
+      },
+      {
+        "name": "bot_043",
+        "join_delay_s": 0.153,
+        "response_time_s": 0.245,
+        "status": "ok"
+      },
+      {
+        "name": "bot_044",
+        "join_delay_s": 0.289,
+        "response_time_s": 0.227,
+        "status": "ok"
+      },
+      {
+        "name": "bot_045",
+        "join_delay_s": 0.155,
+        "response_time_s": 0.188,
+        "status": "ok"
+      },
+      {
+        "name": "bot_046",
+        "join_delay_s": 0.298,
+        "response_time_s": 0.298,
+        "status": "ok"
+      },
+      {
+        "name": "bot_047",
+        "join_delay_s": 0.189,
+        "response_time_s": 0.181,
+        "status": "ok"
+      },
+      {
+        "name": "bot_048",
+        "join_delay_s": 0.26,
+        "response_time_s": 0.265,
+        "status": "ok"
+      },
+      {
+        "name": "bot_049",
+        "join_delay_s": 0.128,
+        "response_time_s": 0.051,
+        "status": "ok"
+      },
+      {
+        "name": "bot_050",
+        "join_delay_s": 0.059,
+        "response_time_s": 0.188,
+        "status": "ok"
+      }
+    ],
+    "errors": 2
+  }
+}
