@@ -1,0 +1,1 @@
+Jobs directory: contiene JSON con los jobs creados desde la interfaz admin. Estos jobs son solo registros y NO se ejecutan automáticamente.

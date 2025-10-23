@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Admin</h1>
+  <div class="card">
+    <p>Crear job (no ejecuta, solo registra):</p>
+    <form method="post" action="{{ url_for('create_job') }}">
+      <label>Tipo</label>
+      <select name="type">
+        <option value="flood">flood</option>
+        <option value="answers">answers</option>
+        <option value="graphical">graphical</option>
+      </select><br><br>
+      <label>Parámetros</label><br>
+      <input name="params" style="width:100%"><br><br>
+      <button class="btn" type="submit">Crear job</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Jobs registrados</h2>
+    {% if jobs %}
+      <ul>
+        {% for job in jobs %}
+          <li>
+            <strong>{{ job.id }}</strong> — {{ job.type }} — {{ job.status }} — {{ job.user }} — {{ job.created_at }}
+            <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn">Descargar</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No hay jobs registrados</p>
+    {% endif %}
+  </div>
+{% endblock %}
