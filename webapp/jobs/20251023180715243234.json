@@ -1,0 +1,20 @@
+{
+  "id": "20251023180715243234",
+  "type": "answers",
+  "params": {
+    "pin": " 763166",
+    "n": 50,
+    "minlat": 50,
+    "maxlat": 300,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T18:07:15.243258Z",
+  "status": "completed",
+  "result": {
+    "output": "[DEBUG] Ejecutando: /home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode answers --pin  763166\n[DEBUG] Working directory: /workspaces/Kitty-Tools\n\ud83d\udcdd Answer Hack - Iniciado\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:  763166\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\ud83d\udd0d Obteniendo informaci\u00f3n del quiz...\n\ud83d\udce1 Conectando a Kahoot API...\n\u274c Error: No se pudo conectar al juego (PIN inv\u00e1lido o juego no iniciado)\n   C\u00f3digo de respuesta: 404",
+    "command": "/home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode answers --pin  763166",
+    "exit_code": 0
+  },
+  "completed_at": "2025-10-23T18:07:15.460965Z"
+}
