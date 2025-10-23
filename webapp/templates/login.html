@@ -2,7 +2,17 @@
 {% block content %}
   <h1>Login</h1>
   <div class="card">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for cat, msg in messages %}
+          <li style="color:{{ '#86efac' if cat=='success' else '#fca5a5' }}">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <form method="post">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
       <label>Usuario</label><br>
       <input name="username" type="text" required><br><br>
       <label>Contraseña</label><br>

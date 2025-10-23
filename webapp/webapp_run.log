@@ -1,12 +1,5 @@
+nohup: ignoring input
  * Serving Flask app 'app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5002
- * Running on http://10.0.3.164:5002
-[33mPress CTRL+C to quit[0m
-127.0.0.1 - - [23/Oct/2025 10:21:59] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [23/Oct/2025 10:22:01] "GET /info HTTP/1.1" 200 -
-127.0.0.1 - - [23/Oct/2025 10:22:03] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [23/Oct/2025 10:22:05] "GET /howto HTTP/1.1" 200 -
-127.0.0.1 - - [23/Oct/2025 10:22:10] "GET /flood HTTP/1.1" 200 -
+ * Debug mode: on
+Address already in use
+Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.

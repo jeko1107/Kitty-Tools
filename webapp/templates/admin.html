@@ -2,8 +2,18 @@
 {% block content %}
   <h1>Admin</h1>
   <div class="card">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for cat, msg in messages %}
+          <li style="color:{{ '#86efac' if cat=='success' else '#fca5a5' }}">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <p>Crear job (no ejecuta, solo registra):</p>
     <form method="post" action="{{ url_for('create_job') }}">
+      <input type="hidden" name="_csrf" value="{{ session.get('_csrf_token') }}">
       <label>Tipo</label>
       <select name="type">
         <option value="flood">flood</option>
@@ -30,5 +40,22 @@
     {% else %}
       <p>No hay jobs registrados</p>
     {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Simulador (dry-run)</h2>
+    <p>Ejecuta simulaciones seguras que no realizan conexiones de red. Parámetros: use comas para separar pares key=value.</p>
+    <form method="post" action="{{ url_for('admin_simulate') }}">
+      <input type="hidden" name="_csrf" value="{{ session.get('_csrf_token') }}">
+      <label>Tipo</label>
+      <select name="sim_type">
+        <option value="flood">flood</option>
+        <option value="answers">answers</option>
+        <option value="graphical">graphical</option>
+      </select><br><br>
+      <label>Parámetros</label><br>
+      <input name="sim_params" placeholder="n=50,minlat=50,maxlat=300"><br><br>
+      <button class="btn" type="submit">Ejecutar simulación</button>
+    </form>
   </div>
 {% endblock %}
