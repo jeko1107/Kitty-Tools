@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Comprobación de dependencias</h1>
+  <div class="card">
+    <ul>
+      {% for pkg, ok in checks.items() %}
+        <li>{{ pkg }}: {% if ok %}<strong style="color:#86efac">Instalado</strong>{% else %}<strong style="color:#fca5a5">No instalado</strong>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    <p>Esta página sólo informa del estado. Para instalar paquetes siga las instrucciones locales (por ejemplo: <code>pip install colorama pystyle</code>).</p>
+  </div>
+{% endblock %}

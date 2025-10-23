@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Estado del entorno</h1>
+  <div class="card">
+    <p><strong>Plataforma:</strong> {{ data.platform }} — {{ data.platform_detail }}</p>
+    <p><strong>Python:</strong> {{ data.python_version }}</p>
+    <p><strong>Enhanced (src) disponible:</strong> {{ 'Sí' if data.src_available else 'No' }}</p>
+  </div>
+{% endblock %}

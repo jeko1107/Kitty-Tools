@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Menú principal (versión web segura)</h1>
+  <p>Esta página muestra las opciones del `main.py`. Las acciones que implican abuso o cheating están deshabilitadas en la web.</p>
+
+  {% for item in menu_items %}
+    <div class="card {% if not item.enabled %}disabled{% endif %}">
+      <strong>{{ loop.index }}. {{ item.label }}</strong>
+      <p>{{ item.description }}</p>
+      {% if item.enabled %}
+        <a class="btn" href="{{ url_for('howto') if item.id=='howto' else (url_for('info') if item.id=='info' else '#') }}">Abrir</a>
+      {% else %}
+        <span class="btn" style="background:#444">Deshabilitado</span>
+        <small style="margin-left:1rem;color:#94a3b8">Deshabilitado por seguridad en la interfaz web</small>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <div class="card">
+    <strong>Modo del repositorio</strong>
+    <p>{% if src_available %}<span style="color:#86efac">Enhanced (src disponible)</span>{% else %}<span style="color:#fca5a5">Standard</span>{% endif %}</p>
+  </div>
+{% endblock %}

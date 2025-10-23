@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Información del proyecto</h1>
+  <pre>{{ info_text }}</pre>
+  <p>Puede ver el código fuente original con <a href="{{ url_for('read_main') }}">Ver main.py</a>.</p>
+{% endblock %}
