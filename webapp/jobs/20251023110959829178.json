@@ -1,0 +1,115 @@
+{
+  "id": "20251023110959829178",
+  "type": "graphical",
+  "params": {},
+  "user": "admin",
+  "created_at": "2025-10-23T11:09:59.829199Z",
+  "status": "simulated",
+  "result": {
+    "type": "graphical",
+    "events": 20,
+    "elapsed_s": 0.0,
+    "log": [
+      {
+        "event": "open",
+        "timestamp": 1761217799.829,
+        "detail": "open_detail"
+      },
+      {
+        "event": "input",
+        "timestamp": 1761217799.829,
+        "detail": "input_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      },
+      {
+        "event": "input",
+        "timestamp": 1761217799.829,
+        "detail": "input_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "open",
+        "timestamp": 1761217799.829,
+        "detail": "open_detail"
+      },
+      {
+        "event": "input",
+        "timestamp": 1761217799.829,
+        "detail": "input_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      },
+      {
+        "event": "input",
+        "timestamp": 1761217799.829,
+        "detail": "input_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      },
+      {
+        "event": "open",
+        "timestamp": 1761217799.829,
+        "detail": "open_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "click",
+        "timestamp": 1761217799.829,
+        "detail": "click_detail"
+      },
+      {
+        "event": "close",
+        "timestamp": 1761217799.829,
+        "detail": "close_detail"
+      }
+    ]
+  }
+}

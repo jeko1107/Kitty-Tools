@@ -235,7 +235,7 @@ def logout():
 def admin():
     # List jobs
     jobs = []
-    for fname in sorted(os.listdir(JOBS_DIR)):
+    for fname in sorted(os.listdir(JOBS_DIR), reverse=True):
         if fname.endswith('.json'):
             path = os.path.join(JOBS_DIR, fname)
             try:
@@ -243,7 +243,7 @@ def admin():
                     jobs.append(json.load(fh))
             except Exception:
                 continue
-    return render_template('admin.html', jobs=jobs)
+    return render_template('admin.html', jobs=jobs, csrf_token=get_csrf_token())
 
 
 @app.route('/admin/create_job', methods=['POST'])
@@ -279,6 +279,18 @@ def download_job(jobid):
     path = os.path.join(JOBS_DIR, f"{jobid}.json")
     if os.path.isfile(path):
         return send_file(path, as_attachment=True)
+    flash('Job no encontrado', 'danger')
+    return redirect(url_for('admin'))
+
+
+@app.route('/admin/view_job/<jobid>')
+@login_required
+def view_job(jobid):
+    path = os.path.join(JOBS_DIR, f"{jobid}.json")
+    if os.path.isfile(path):
+        with open(path, 'r', encoding='utf-8') as fh:
+            job = json.load(fh)
+        return render_template('view_job.html', job=job)
     flash('Job no encontrado', 'danger')
     return redirect(url_for('admin'))
 
@@ -395,7 +407,8 @@ def admin_simulate():
     with open(out, 'w', encoding='utf-8') as fh:
         json.dump(job, fh, indent=2)
     flash('Simulación completada y registrada', 'success')
-    return redirect(url_for('admin'))
+    # Redirect to view the result
+    return redirect(url_for('view_job', jobid=job['id']))
 
 if __name__ == '__main__':
     # Run in debug mode by default for local testing. Do not expose in production without proper hardening.

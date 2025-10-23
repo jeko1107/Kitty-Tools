@@ -1,61 +1,111 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Admin</h1>
-  <div class="card">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
+  <h1>Panel de Administración</h1>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="card" style="margin-bottom:1rem">
         {% for cat, msg in messages %}
-          <li style="color:{{ '#86efac' if cat=='success' else '#fca5a5' }}">{{ msg }}</li>
+          <div style="padding:0.5rem;margin:0.25rem 0;background:{{ '#1a2f1a' if cat=='success' else '#2f1a1a' }};border-left:3px solid {{ '#86efac' if cat=='success' else '#fca5a5' }};color:{{ '#86efac' if cat=='success' else '#fca5a5' }}">
+            {{ msg }}
+          </div>
         {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <p>Crear job (no ejecuta, solo registra):</p>
-    <form method="post" action="{{ url_for('create_job') }}">
-      <input type="hidden" name="_csrf" value="{{ session.get('_csrf_token') }}">
-      <label>Tipo</label>
-      <select name="type">
-        <option value="flood">flood</option>
-        <option value="answers">answers</option>
-        <option value="graphical">graphical</option>
-      </select><br><br>
-      <label>Parámetros</label><br>
-      <input name="params" style="width:100%"><br><br>
-      <button class="btn" type="submit">Crear job</button>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
+    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Simulación</h2>
+    <p style="color:#94a3b8">Ejecuta simulaciones seguras que no realizan conexiones de red. Los resultados se mostrarán en tiempo real.</p>
+    
+    <form method="post" action="{{ url_for('admin_simulate') }}" style="margin-top:1rem">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      
+      <div style="margin-bottom:1rem">
+        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Tipo de Simulación</label>
+        <select name="sim_type" id="sim_type" style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem" onchange="updateParamsPlaceholder()">
+          <option value="flood">🌊 Kahoot Flood - Simular múltiples bots uniéndose</option>
+          <option value="answers">📝 Answer Hack - Simular respuestas de bots</option>
+          <option value="graphical">🖥️ GUI - Simular eventos de interfaz gráfica</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:1rem">
+        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Parámetros</label>
+        <input name="sim_params" id="sim_params" placeholder="n=50,minlat=50,maxlat=300" style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
+        <small id="params_help" style="color:#64748b;display:block;margin-top:0.25rem">
+          n: número de bots, minlat: latencia mínima (ms), maxlat: latencia máxima (ms)
+        </small>
+      </div>
+
+      <button class="btn" type="submit" style="background:#2563eb;color:white;padding:0.75rem 1.5rem;font-size:1rem;font-weight:bold;cursor:pointer;border:none;border-radius:4px">
+        ▶️ Ejecutar Simulación
+      </button>
     </form>
   </div>
 
-  <div class="card">
-    <h2>Jobs registrados</h2>
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
+    <h2 style="color:#60a5fa;margin-top:0">📊 Historial de Simulaciones</h2>
     {% if jobs %}
-      <ul>
-        {% for job in jobs %}
-          <li>
-            <strong>{{ job.id }}</strong> — {{ job.type }} — {{ job.status }} — {{ job.user }} — {{ job.created_at }}
-            <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn">Descargar</a>
-          </li>
-        {% endfor %}
-      </ul>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;color:#e2e8f0">
+          <thead>
+            <tr style="background:#1e293b;border-bottom:2px solid #334155">
+              <th style="padding:0.75rem;text-align:left">ID</th>
+              <th style="padding:0.75rem;text-align:left">Tipo</th>
+              <th style="padding:0.75rem;text-align:left">Estado</th>
+              <th style="padding:0.75rem;text-align:left">Usuario</th>
+              <th style="padding:0.75rem;text-align:left">Fecha</th>
+              <th style="padding:0.75rem;text-align:left">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+              <tr style="border-bottom:1px solid #334155;{{ 'background:#1a2f1a' if job.status == 'simulated' else '' }}">
+                <td style="padding:0.75rem;font-family:monospace;font-size:0.85rem">{{ job.id[:12] }}...</td>
+                <td style="padding:0.75rem">
+                  {% if job.type == 'flood' %}🌊 Flood
+                  {% elif job.type == 'answers' %}📝 Answers
+                  {% elif job.type == 'graphical' %}🖥️ GUI
+                  {% else %}{{ job.type }}{% endif %}
+                </td>
+                <td style="padding:0.75rem">
+                  <span style="padding:0.25rem 0.5rem;border-radius:3px;background:{{ '#1a2f1a' if job.status == 'simulated' else '#2f2a1a' }};color:{{ '#86efac' if job.status == 'simulated' else '#fcd34d' }}">
+                    {{ job.status }}
+                  </span>
+                </td>
+                <td style="padding:0.75rem">{{ job.user }}</td>
+                <td style="padding:0.75rem;font-size:0.85rem">{{ job.created_at[:19] }}</td>
+                <td style="padding:0.75rem">
+                  <a href="{{ url_for('view_job', jobid=job.id) }}" class="btn" style="padding:0.35rem 0.7rem;margin-right:0.5rem;font-size:0.85rem;background:#2563eb">👁️ Ver</a>
+                  <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn" style="padding:0.35rem 0.7rem;font-size:0.85rem;background:#059669">💾 JSON</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
-      <p>No hay jobs registrados</p>
+      <p style="color:#64748b;text-align:center;padding:2rem">No hay simulaciones registradas. ¡Ejecuta tu primera simulación arriba!</p>
     {% endif %}
   </div>
 
-  <div class="card">
-    <h2>Simulador (dry-run)</h2>
-    <p>Ejecuta simulaciones seguras que no realizan conexiones de red. Parámetros: use comas para separar pares key=value.</p>
-    <form method="post" action="{{ url_for('admin_simulate') }}">
-      <input type="hidden" name="_csrf" value="{{ session.get('_csrf_token') }}">
-      <label>Tipo</label>
-      <select name="sim_type">
-        <option value="flood">flood</option>
-        <option value="answers">answers</option>
-        <option value="graphical">graphical</option>
-      </select><br><br>
-      <label>Parámetros</label><br>
-      <input name="sim_params" placeholder="n=50,minlat=50,maxlat=300"><br><br>
-      <button class="btn" type="submit">Ejecutar simulación</button>
-    </form>
-  </div>
+  <script>
+    function updateParamsPlaceholder() {
+      const type = document.getElementById('sim_type').value;
+      const input = document.getElementById('sim_params');
+      const help = document.getElementById('params_help');
+      
+      if (type === 'flood') {
+        input.placeholder = 'n=50,minlat=50,maxlat=300';
+        help.textContent = 'n: número de bots, minlat: latencia mínima (ms), maxlat: latencia máxima (ms)';
+      } else if (type === 'answers') {
+        input.placeholder = 'n=50,q=10,acc=0.7';
+        help.textContent = 'n: número de bots, q: número de preguntas, acc: precisión (0.0-1.0)';
+      } else if (type === 'graphical') {
+        input.placeholder = 'e=20';
+        help.textContent = 'e: número de eventos a simular';
+      }
+    }
+  </script>
 {% endblock %}

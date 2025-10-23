@@ -1,5 +1,31 @@
 nohup: ignoring input
  * Serving Flask app 'app'
- * Debug mode: on
-Address already in use
-Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.3.164:5000
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [23/Oct/2025 11:09:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:09:31] "GET /graphical HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:09:35] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:09:39] "GET /admin/view_job/20251023110524380090 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:09:42] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:09:59] "[32mPOST /admin/simulate HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 11:09:59] "GET /admin/view_job/20251023110959829178 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:09] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:09] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:09] "[32mGET /admin HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 11:10:20] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:22] "[32mPOST /admin/simulate HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 11:10:22] "GET /admin/view_job/20251023111022762899 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:31] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:41] "[32mPOST /admin/simulate HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 11:10:41] "GET /admin/view_job/20251023111041930062 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:46] "[32mGET /admin HTTP/1.1[0m" 302 -
+127.0.0.1 - - [23/Oct/2025 11:10:49] "GET /admin/view_job/20251023111041930062 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:50] "GET /admin/view_job/20251023111041930062 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:52] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:10:54] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2025 11:11:34] "GET /admin HTTP/1.1" 200 -
