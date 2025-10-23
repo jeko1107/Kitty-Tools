@@ -1,0 +1,13 @@
+{
+  "id": "20251023124044323485",
+  "type": "answers",
+  "params": {
+    "mode": "answers"
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T12:40:44.323542Z",
+  "status": "error",
+  "result": {
+    "output": "Error: La ejecuci\u00f3n excedi\u00f3 el tiempo l\u00edmite de 60 segundos."
+  }
+}

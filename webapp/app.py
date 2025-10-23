@@ -454,5 +454,31 @@ def download_log(jobid):
     flash('Log no encontrado', 'danger')
     return redirect(url_for('view_job', jobid=jobid))
 
+@app.route('/admin/job_status/<jobid>')
+@login_required
+def job_status(jobid):
+    """Endpoint para polling: devuelve estado actual del job y salida del log"""
+    job_path = os.path.join(JOBS_DIR, f"{jobid}.json")
+    log_path = os.path.join(JOBS_DIR, f"{jobid}.log")
+    
+    if not os.path.isfile(job_path):
+        return {'error': 'Job no encontrado'}, 404
+    
+    with open(job_path, 'r', encoding='utf-8') as fh:
+        job = json.load(fh)
+    
+    # Leer log actual si existe
+    output = ''
+    if os.path.isfile(log_path):
+        with open(log_path, 'r', encoding='utf-8') as logf:
+            output = logf.read()
+    
+    return {
+        'id': job.get('id'),
+        'status': job.get('status', 'unknown'),
+        'output': output,
+        'result': job.get('result', {})
+    }
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

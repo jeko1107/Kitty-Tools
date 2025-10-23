@@ -1,0 +1,32 @@
+🌊 Kahoot Flooder - Iniciado
+════════════════════════════════════════════════════════════
+
+📋 Configuración:
+   PIN del juego:     9999999
+   Número de bots:    3
+   Latencia mínima:   30ms
+   Latencia máxima:   80ms
+
+────────────────────────────────────────────────────────────
+
+🚀 EJECUTANDO FLOOD...
+
+✅ Node.js detectado: v22.17.0
+
+📡 Preparando conexión al juego Kahoot...
+
+   ✓ Bot_001              conectado (30ms)
+   ✓ Bot_002              conectado (50ms)
+   ✓ Bot_003              conectado (70ms)
+
+────────────────────────────────────────────────────────────
+
+✅ FLOOD COMPLETADO
+
+📊 Resumen:
+   Total de bots:     3
+   Estado:            Activos
+   PIN del juego:     9999999
+
+🎮 Los bots están listos para responder preguntas
+

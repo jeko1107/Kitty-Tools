@@ -51,9 +51,10 @@
             <div style="color:#64748b;font-size:0.85rem">Total Bots</div>
             <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.n_bots }}</div>
           </div>
+          {% set errors_color = '#fca5a5' if job.result.errors > 0 else '#86efac' %}
           <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
             <div style="color:#64748b;font-size:0.85rem">Errores</div>
-            <div style="color:{{ '#fca5a5' if job.result.errors > 0 else '#86efac' }};font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.errors }}</div>
+          <div class="errors-count" data-color="{{ errors_color }}">{{ job.result.errors }}</div>
           </div>
           <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
             <div style="color:#64748b;font-size:0.85rem">Tiempo Total</div>
@@ -136,9 +137,13 @@
                   <td style="padding:0.5rem;font-family:monospace">{{ bot.name }}</td>
                   <td style="padding:0.5rem;text-align:center">{{ bot.correct }}</td>
                   <td style="padding:0.5rem;text-align:center;color:#a78bfa;font-weight:bold">{{ "%.0f"|format(bot.correct * 100.0 / job.result.n_questions) }}%</td>
+                  {% set pct = 0 %}
+                  {% if job.result.n_questions and job.result.n_questions != 0 %}
+                    {% set pct = ((bot.correct * 100.0) / job.result.n_questions)|int %}
+                  {% endif %}
                   <td style="padding:0.5rem">
                     <div style="background:#334155;height:8px;border-radius:4px;overflow:hidden">
-                      <div style="background:#86efac;height:100%;width:{{ (bot.correct * 100.0 / job.result.n_questions)|int }}%"></div>
+                        <div class="bot-progress" data-pct="{{ pct }}"></div>
                     </div>
                   </td>
                 </tr>
@@ -176,9 +181,105 @@
     {% endif %}
   {% endif %}
 
+  <!-- Sección de salida en tiempo real -->
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
+    <h3 style="color:#60a5fa;margin-top:0">📄 Salida en Tiempo Real</h3>
+    <div id="job-status-badge" style="display:inline-block;padding:0.25rem 0.75rem;border-radius:3px;background:#1a2f1a;color:#86efac;font-size:0.9rem;margin-bottom:1rem">
+      Estado: <span id="status-text">{{ job.status }}</span>
+    </div>
+    <div id="live-output" style="max-height:500px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px;font-family:monospace;font-size:0.85rem;white-space:pre-wrap;color:#e2e8f0">
+      {{ job.result.output or 'Iniciando ejecución...' }}
+    </div>
+    {% if job.result.log %}
+      <p style="margin-top:1rem"><a href="{{ url_for('download_log', jobid=job.id) }}" style="color:#60a5fa">💾 Descargar log completo</a></p>
+    {% endif %}
+  </div>
+
   <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
     <h3 style="color:#60a5fa;margin-top:0">🔧 Acciones</h3>
     <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn" style="background:#059669;margin-right:1rem">💾 Descargar JSON</a>
     <a href="{{ url_for('admin') }}" class="btn" style="background:#2563eb">← Volver al Panel</a>
   </div>
+  <script>
+    // Aplicar estilos dinámicos basados en data-attributes
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.errors-count').forEach(function(el){
+        var c = el.getAttribute('data-color') || '#86efac';
+        el.style.color = c;
+        el.style.fontSize = '2rem';
+        el.style.fontWeight = 'bold';
+        el.style.marginTop = '0.5rem';
+      });
+      document.querySelectorAll('.bot-progress').forEach(function(el){
+        var pct = parseInt(el.getAttribute('data-pct') || '0', 10);
+        el.style.background = '#86efac';
+        el.style.height = '100%';
+        el.style.width = pct + '%';
+      });
+
+      // Polling para actualizar salida en tiempo real
+      var jobId = '{{ job.id }}';
+      var currentStatus = '{{ job.status }}';
+      var pollInterval = null;
+
+      function updateJobStatus() {
+        fetch('/admin/job_status/' + jobId)
+          .then(function(response) {
+            if (!response.ok) throw new Error('Error al obtener estado del job');
+            return response.json();
+          })
+          .then(function(data) {
+            // Actualizar estado
+            var statusEl = document.getElementById('status-text');
+            var badgeEl = document.getElementById('job-status-badge');
+            var outputEl = document.getElementById('live-output');
+
+            if (statusEl) statusEl.textContent = data.status;
+            
+            // Actualizar color del badge según estado
+            if (badgeEl) {
+              if (data.status === 'success') {
+                badgeEl.style.background = '#1a2f1a';
+                badgeEl.style.color = '#86efac';
+              } else if (data.status === 'error') {
+                badgeEl.style.background = '#2f1a1a';
+                badgeEl.style.color = '#fca5a5';
+              } else if (data.status === 'running') {
+                badgeEl.style.background = '#1a2a2f';
+                badgeEl.style.color = '#60a5fa';
+              }
+            }
+
+            // Actualizar salida
+            if (outputEl && data.output) {
+              outputEl.textContent = data.output;
+              // Auto-scroll al final
+              outputEl.scrollTop = outputEl.scrollHeight;
+            }
+
+            // Detener polling si el job terminó
+            if (data.status === 'success' || data.status === 'error') {
+              if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+                console.log('Job finalizado, polling detenido');
+              }
+            }
+
+            currentStatus = data.status;
+          })
+          .catch(function(err) {
+            console.error('Error en polling:', err);
+          });
+      }
+
+      // Iniciar polling solo si el job está running
+      if (currentStatus === 'running') {
+        // Primera actualización inmediata
+        updateJobStatus();
+        // Luego cada 2 segundos
+        pollInterval = setInterval(updateJobStatus, 2000);
+      }
+    });
+  </script>
 {% endblock %}
