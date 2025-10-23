@@ -1,0 +1,1 @@
+Templates añadidos: flood.html, answers.html, graphical.html. Estas plantillas muestran comandos y advertencias, no ejecutan acciones peligrosas desde la web.

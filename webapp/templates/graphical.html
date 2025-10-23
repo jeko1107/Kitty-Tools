@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Interfaz gráfica — Vista segura</h1>
+  <div class="card">
+    <p>{{ note }}</p>
+    {% if has_gui %}
+      <p>Comando para lanzar la GUI localmente:</p>
+      <pre>{{ cmd }}</pre>
+    {% else %}
+      <p style="color:#94a3b8">No se encontró una interfaz gráfica local. Compruebe `src/client` o `Kitty/client.py`.</p>
+    {% endif %}
+  </div>
+{% endblock %}

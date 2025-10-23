@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Answer Hack — Vista segura</h1>
+  <div class="card">
+    <p style="color:#fca5a5">{{ warning }}</p>
+    <p>Comando sugerido para ejecutar localmente (solo si está trabajando en un entorno de pruebas):</p>
+    <pre>{{ cmd }}</pre>
+    <p>Use esta herramienta solo con permiso. No la exponga en la web.</p>
+  </div>
+{% endblock %}

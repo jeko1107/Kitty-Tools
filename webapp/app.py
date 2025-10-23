@@ -10,9 +10,10 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 menu_items = [
     {"id":"howto","label":"How to Use","description":"Guía interactiva sobre el uso de Kitty Tools","enabled":True},
     {"id":"info","label":"Information","description":"Créditos, licencia e información adicional","enabled":True},
-    {"id":"flood","label":"Kahoot Flooder","description":"(DESHABILITADO) Utilidad de flooding para Kahoot","enabled":False},
-    {"id":"answers","label":"Answer Hack","description":"(DESHABILITADO) Obtener respuestas para quizzes de Kahoot","enabled":False},
-    {"id":"graphical","label":"GUI","description":"(DESHABILITADO) Interfaz gráfica","enabled":False},
+    # Estas entradas aparecen habilitadas en la UI pero las rutas web son 'stubs' seguros
+    {"id":"flood","label":"Kahoot Flooder","description":"Kahoot Flooder (habilitado en UI: ver comandos seguros)","enabled":True},
+    {"id":"answers","label":"Answer Hack","description":"Answer Hack (habilitado en UI: ver comandos seguros)","enabled":True},
+    {"id":"graphical","label":"GUI","description":"Interfaz gráfica (habilitado en UI: ver comandos seguros)","enabled":True},
     {"id":"exit","label":"Exit","description":"Salir de la aplicación (no aplica en web)","enabled":True},
 ]
 
@@ -63,6 +64,57 @@ def status():
         'src_available': src_available,
     }
     return render_template('status.html', data=data)
+
+
+@app.route('/flood')
+def flood():
+    # Esta ruta NO ejecuta el flooder; muestra cómo ejecutarlo localmente y advertencias.
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    src_available = os.path.isdir(os.path.join(repo_root, 'src'))
+    if src_available:
+        cmd = f"{sys.executable} {os.path.join(repo_root, 'src', 'main.py')}"
+    else:
+        cmd = f"{sys.executable} {os.path.join(repo_root, 'Kitty', 'Flood', 'main.py')}"
+    warning = (
+        "ATENCIÓN: El uso de flooders puede ser ilegal o violar las condiciones de servicio. "
+        "Nunca ejecute estas herramientas contra servicios o redes sin permiso explícito."
+    )
+    return render_template('flood.html', cmd=cmd, warning=warning, src_available=src_available)
+
+
+@app.route('/answers')
+def answers():
+    # Ruta segura que muestra cómo ejecutar localmente la herramienta de cliente
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    src_available = os.path.isdir(os.path.join(repo_root, 'src'))
+    if src_available:
+        cmd = f"{sys.executable} {os.path.join(repo_root, 'src', 'client.py')}"
+    else:
+        cmd = f"{sys.executable} {os.path.join(repo_root, 'Kitty', 'client.py')}"
+    warning = (
+        "ATENCIÓN: Obtener respuestas de quizzes sin permiso puede ser considerado cheating. "
+        "Use estas utilidades sólo en entornos de pruebas o con autorización."
+    )
+    return render_template('answers.html', cmd=cmd, warning=warning, src_available=src_available)
+
+
+@app.route('/graphical')
+def graphical():
+    # Mostrar instrucciones para ejecutar la GUI localmente
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    gui_path = os.path.join(repo_root, 'src', 'client', 'main.py')
+    alt_path = os.path.join(repo_root, 'Kitty', 'client.py')
+    if os.path.isfile(gui_path):
+        cmd = f"{sys.executable} {gui_path}"
+        has_gui = True
+    else:
+        cmd = f"{sys.executable} {alt_path}"
+        has_gui = os.path.isfile(alt_path)
+    note = (
+        "Nota: la GUI requiere PyQt5 u otro framework gráfico. Estos pasos son para ejecución "
+        "local en su máquina de desarrollo."
+    )
+    return render_template('graphical.html', cmd=cmd, note=note, has_gui=has_gui)
 
 @app.route('/dependencies')
 def dependencies():

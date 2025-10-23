@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Kahoot Flooder — Vista segura</h1>
+  <div class="card">
+    <p style="color:#fca5a5">{{ warning }}</p>
+    <p>Comando sugerido para ejecutar localmente (solo si entiende las implicaciones):</p>
+    <pre>{{ cmd }}</pre>
+    <p>Si no dispone del código fuente "src", compruebe la carpeta `Kitty/Flood`.</p>
+  </div>
+{% endblock %}
