@@ -1,0 +1,23 @@
+{
+  "id": "20251023153934632878",
+  "type": "answers",
+  "params": {
+    "pin": "8906200",
+    "n": 50,
+    "minlat": 50,
+    "maxlat": 300,
+    "q": 10,
+    "acc": 0.8,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T15:39:34.632901Z",
+  "status": "completed",
+  "result": {
+    "output": "\ud83d\udcdd Answer Hack\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nConfiguraci\u00f3n:\n  Bots: 10\n  PIN: 8906200\n  Preguntas: 10\n  Precisi\u00f3n: 80.0%\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u2705 Answer hack ejecutado correctamente\n\ud83d\udcca Respuestas obtenidas",
+    "exit_code": 0,
+    "n_questions": 10,
+    "accuracy": 0.8
+  },
+  "completed_at": "2025-10-23T15:39:34.690482Z"
+}

@@ -108,40 +108,86 @@ Kitty-Tools is a comprehensive suite of utilities designed for enhancing and ana
    ```
 </details>
 
+
 ## 📊 Usage Guide
 
-### 1. Answer Viewer
+Kitty-Tools now soporta tres modos principales:
 
-The Answer Viewer module allows you to retrieve answers for Kahoot quizzes:
+### 1. CLI Mode (Terminal)
 
-1. Start the application with `python main.py`
-2. Select "Answer Hack" from the main menu
-3. Enter the Kahoot Quiz ID or Game PIN
-<img width="499" height="29" alt="image" src="https://github.com/user-attachments/assets/a2870491-0e08-415c-95a0-ac0151ee9bf8" />
+Interfaz textual mejorada, ideal para sistemas sin entorno gráfico.
 
-5. View answers displayed in an organized format
-6. Optionally export answers to a text file
+Ejecuta:
+```bash
+python main.py --mode answers   # Modo respuestas Kahoot
+python main.py --mode flood     # Modo flooder de bots
+python main.py --mode graphical # Modo gráfico textual (no PyQt5)
+```
+Si ejecutas simplemente `python main.py`, aparecerá un menú interactivo en terminal.
 
-### 2. Kahoot Flooder
+### 2. Web Mode (Flask)
 
-The Flooder creates multiple bot participants in a Kahoot game:
+Interfaz web moderna y segura, con panel de control y login.
 
-1. Start the application with `python main.py` (**Won't work in codespace**)
-2. Select "Kahoot Flooder" from the main menu
-3. Configure bot settings:
-   - Game PIN
-   - Number of bots
-   - Name generation options
-   - Bot behavior settings
-4. Start the flooder and optionally control bot responses
+Desde la carpeta `webapp/` ejecuta:
+```bash
+cd webapp
+python app.py
+```
+Luego abre [http://localhost:5000](http://localhost:5000) en tu navegador.
 
-### 3. Graphical Interface
+### 3. GUI Mode (PyQt5)
 
-For a more user-friendly experience:
+Interfaz gráfica real, moderna y futurista (requiere PyQt5 y entorno gráfico).
 
-1. Start the application with `python main.py`
-2. Select "GUI" from the main menu
-3. Use the intuitive tabbed interface to access all features
+Ejecuta:
+```bash
+python main.py --mode pyqt
+```
+Si no tienes entorno gráfico (por ejemplo, en servidores o Codespaces), verás un error claro y seguro.
+
+#### Notas sobre GUI (PyQt5):
+- Si ves un error sobre `DISPLAY` o `PyQt5`, asegúrate de tener entorno gráfico y la librería instalada:
+   ```bash
+   pip install PyQt5
+   ```
+- El sistema intentará importar la GUI desde varias rutas y mostrará mensajes claros si hay problemas.
+
+---
+
+### Resumen de Modos
+
+| Modo         | Comando                        | Requiere GUI | Notas                      |
+|--------------|-------------------------------|--------------|----------------------------|
+| CLI          | `python main.py --mode ...`   | No           | Menú textual, robusto      |
+| Web (Flask)  | `python app.py` (en webapp/)  | No           | Navegador, login seguro    |
+| GUI (PyQt5)  | `python main.py --mode pyqt`  | Sí           | Interfaz moderna, PyQt5    |
+
+---
+
+## 🖌️ Visual & UX Improvements
+
+- Interfaz web y GUI con estilo futurista (glassmorphism, neon, responsive)
+- Sin emojis de gatos ni botones innecesarios
+- Panel de control y login integrados en la web
+- CLI con salida formateada y símbolos auténticos Kahoot
+
+## ⚠️ Troubleshooting
+
+- **Falta PyQt5**: Instala con `pip install PyQt5`
+- **No DISPLAY**: Solo puedes usar GUI en sistemas con entorno gráfico
+- **Node.js requerido**: Para el flooder, instala Node.js si no está presente
+- **Errores de dependencias**: El sistema intentará instalar `colorama` y `pystyle` automáticamente
+
+## 🤝 Contributors
+
+Ver sección original para lista completa de contribuyentes.
+
+---
+
+<p align="center">
+   &copy; 2025 Kitty-Tools | All rights reserved
+</p>
 
 ## 🔧 Advanced Configuration
 

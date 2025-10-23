@@ -14,272 +14,275 @@
         <div style="color:#e2e8f0;font-family:monospace;margin-top:0.25rem">{{ job.id }}</div>
       </div>
       <div style="background:#1e293b;padding:1rem;border-radius:4px">
+        <div style="color:#64748b;font-size:0.85rem">Estado</div>
+        <div id="job-status" style="font-family:monospace;margin-top:0.25rem">
+          {% if job.status == 'running' %}
+            <span style="color:#fbbf24">⚡ Ejecutando</span>
+          {% elif job.status == 'completed' %}
+            <span style="color:#10b981">✅ Completado</span>
+          {% elif job.status == 'failed' %}
+            <span style="color:#ef4444">❌ Fallido</span>
+          {% elif job.status == 'stopped' %}
+            <span style="color:#f59e0b">⏸️ Detenido</span>
+          {% elif job.status == 'timeout' %}
+            <span style="color:#f59e0b">⏱️ Timeout</span>
+          {% elif job.status == 'error' %}
+            <span style="color:#ef4444">❌ Error</span>
+          {% else %}
+            <span style="color:#94a3b8">{{ job.status }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div style="background:#1e293b;padding:1rem;border-radius:4px">
         <div style="color:#64748b;font-size:0.85rem">Tipo</div>
-        <div style="color:#e2e8f0;margin-top:0.25rem">
-          {% if job.type == 'flood' %}🌊 Kahoot Flood
-          {% elif job.type == 'answers' %}📝 Answer Hack
-          {% elif job.type == 'graphical' %}🖥️ GUI
+        <div style="color:#e2e8f0;font-family:monospace;margin-top:0.25rem">
+          {% if job.type == 'flood' %}🌊 Flood
+          {% elif job.type == 'answers' %}📝 Answers
+          {% elif job.type == 'gui' %}🖥️ GUI
           {% else %}{{ job.type }}{% endif %}
         </div>
       </div>
       <div style="background:#1e293b;padding:1rem;border-radius:4px">
-        <div style="color:#64748b;font-size:0.85rem">Estado</div>
-        <div style="margin-top:0.25rem">
-          <span style="padding:0.25rem 0.5rem;border-radius:3px;background:#1a2f1a;color:#86efac">
-            {{ job.status }}
-          </span>
-        </div>
-      </div>
-      <div style="background:#1e293b;padding:1rem;border-radius:4px">
         <div style="color:#64748b;font-size:0.85rem">Usuario</div>
-        <div style="color:#e2e8f0;margin-top:0.25rem">{{ job.user }}</div>
-      </div>
-      <div style="background:#1e293b;padding:1rem;border-radius:4px">
-        <div style="color:#64748b;font-size:0.85rem">Fecha</div>
-        <div style="color:#e2e8f0;margin-top:0.25rem">{{ job.created_at[:19] }}</div>
+        <div style="color:#e2e8f0;font-family:monospace;margin-top:0.25rem">{{ job.user }}</div>
       </div>
     </div>
+
+    {% if job.status == 'running' %}
+    <div style="margin-top:1rem">
+      <form method="POST" action="{{ url_for('stop_job', jobid=job.id) }}" style="display:inline">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="btn" style="background:#ef4444">⏹️ Detener Job</button>
+      </form>
+    </div>
+    {% endif %}
   </div>
 
-  {% if job.result %}
-    {% if job.type == 'flood' %}
-      <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-        <h2 style="color:#60a5fa;margin-top:0">🌊 Resultados de Flood</h2>
-        
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1rem 0">
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Total Bots</div>
-            <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.n_bots }}</div>
-          </div>
-          {% set errors_color = '#fca5a5' if job.result.errors > 0 else '#86efac' %}
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Errores</div>
-          <div class="errors-count" data-color="{{ errors_color }}">{{ job.result.errors }}</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Tiempo Total</div>
-            <div style="color:#fcd34d;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ "%.3f"|format(job.result.elapsed_s) }}s</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Tasa de Éxito</div>
-            <div style="color:#86efac;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ "%.1f"|format((job.result.n_bots - job.result.errors) * 100.0 / job.result.n_bots) }}%</div>
-          </div>
-        </div>
+  <div class="card" style="background:#0f1a24;border:1px solid#1e3a5f;margin-top:1.5rem">
+    <h2 style="color:#60a5fa;margin-top:0">📊 Salida de Ejecución</h2>
+    <div id="output-container" style="background:#1e293b;padding:1.5rem;border-radius:8px;max-height:800px;overflow-y:auto;font-family:monospace;color:#e2e8f0;font-size:0.9rem;line-height:1.6"></div>
+  </div>
 
-        <h3 style="color:#94a3b8;margin-top:2rem">Lista de Bots</h3>
-        <div style="max-height:400px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px">
-          <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:0.9rem">
-            <thead>
-              <tr style="border-bottom:2px solid #334155;position:sticky;top:0;background:#1e293b">
-                <th style="padding:0.5rem;text-align:left">Bot</th>
-                <th style="padding:0.5rem;text-align:right">Delay (s)</th>
-                <th style="padding:0.5rem;text-align:right">Respuesta (s)</th>
-                <th style="padding:0.5rem;text-align:center">Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for bot in job.result.bots %}
-                <tr style="border-bottom:1px solid #334155">
-                  <td style="padding:0.5rem;font-family:monospace">{{ bot.name }}</td>
-                  <td style="padding:0.5rem;text-align:right">{{ "%.3f"|format(bot.join_delay_s) }}</td>
-                  <td style="padding:0.5rem;text-align:right">{{ "%.3f"|format(bot.response_time_s) }}</td>
-                  <td style="padding:0.5rem;text-align:center">
-                    {% if bot.status == 'ok' %}
-                      <span style="color:#86efac">✓</span>
-                    {% else %}
-                      <span style="color:#fca5a5">✗</span>
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <script>
+    const jobId = '{{ job.id }}';
+    const jobStatus = '{{ job.status }}';
+    let pollInterval = null;
+    let currentOutput = {{ job.result.output | tojson if job.result and job.result.output else '""' }};
 
-    {% elif job.type == 'answers' %}
-      <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-        <h2 style="color:#60a5fa;margin-top:0">📝 Resultados de Answer Hack</h2>
-        
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1rem 0">
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Total Bots</div>
-            <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.n_bots }}</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Preguntas</div>
-            <div style="color:#fcd34d;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.n_questions }}</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Precisión Config</div>
-            <div style="color:#86efac;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ "%.0f"|format(job.result.accuracy * 100) }}%</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Score Promedio</div>
-            <div style="color:#a78bfa;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.avg_score }}/{{ job.result.n_questions }}</div>
-          </div>
-        </div>
+    function formatKahootOutput(text) {
+      // Convertir el texto plano en HTML formateado
+      let html = text;
+      
+      // Detectar y formatear cajas de preguntas
+      html = html.replace(/╔═+╗\n║\s+(📋 PREGUNTA #\d+)\s+║\n╚═+╝/g, 
+        '<div style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);padding:1rem;border-radius:8px;margin:1.5rem 0 0.5rem 0;box-shadow:0 4px 6px rgba(0,0,0,0.3)"><strong style="color:#fef3c7;font-size:1.1rem">$1</strong></div>');
+      
+      // Formatear preguntas (❓)
+      html = html.replace(/❓ (.+)/g, '<div style="background:#0f172a;padding:1rem;border-left:4px solid #60a5fa;margin:0.5rem 0;border-radius:4px;color:#e2e8f0;font-size:1rem"><strong>❓ $1</strong></div>');
+      
+      // Formatear cajas de opciones
+      html = html.replace(/┌─+┐\n│\s+(.+?)\s+│\n├─+┤/g, '<div style="background:#1e293b;border:2px solid #475569;border-radius:8px;padding:0.5rem;margin:1rem 0"><div style="padding:0.5rem;background:#334155;border-radius:4px;color:#fbbf24;font-weight:bold;text-align:center">$1</div><div style="padding:0.5rem">');
+      
+      html = html.replace(/└─+┘/g, '</div></div>');
+      
+      // Formatear respuestas con símbolos de Kahoot
+      html = html.replace(/│ (🔴 △)\s+(✅|)\s*(.+?)\s+│/g, function(match, symbol, check, text) {
+        if (check === '✅') {
+          return '<div style="background:rgba(34,197,94,0.2);border-left:4px solid #22c55e;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span><span style="color:#22c55e;font-size:1.2rem;margin-left:0.5rem">✅</span></div>';
+        } else {
+          return '<div style="background:rgba(51,65,85,0.3);border-left:4px solid #475569;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span></div>';
+        }
+      });
+      
+      html = html.replace(/│ (🔵 ◇)\s+(✅|)\s*(.+?)\s+│/g, function(match, symbol, check, text) {
+        if (check === '✅') {
+          return '<div style="background:rgba(34,197,94,0.2);border-left:4px solid #22c55e;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span><span style="color:#22c55e;font-size:1.2rem;margin-left:0.5rem">✅</span></div>';
+        } else {
+          return '<div style="background:rgba(51,65,85,0.3);border-left:4px solid #475569;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span></div>';
+        }
+      });
+      
+      html = html.replace(/│ (🟡 ○)\s+(✅|)\s*(.+?)\s+│/g, function(match, symbol, check, text) {
+        if (check === '✅') {
+          return '<div style="background:rgba(34,197,94,0.2);border-left:4px solid #22c55e;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span><span style="color:#22c55e;font-size:1.2rem;margin-left:0.5rem">✅</span></div>';
+        } else {
+          return '<div style="background:rgba(51,65,85,0.3);border-left:4px solid #475569;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span></div>';
+        }
+      });
+      
+      html = html.replace(/│ (🟢 □)\s+(✅|)\s*(.+?)\s+│/g, function(match, symbol, check, text) {
+        if (check === '✅') {
+          return '<div style="background:rgba(34,197,94,0.2);border-left:4px solid #22c55e;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span><span style="color:#22c55e;font-size:1.2rem;margin-left:0.5rem">✅</span></div>';
+        } else {
+          return '<div style="background:rgba(51,65,85,0.3);border-left:4px solid #475569;padding:0.75rem;margin:0.25rem 0;border-radius:4px;display:flex;align-items:center"><span style="font-size:1.3rem;margin-right:0.75rem">' + symbol + '</span><span style="flex:1">' + text + '</span></div>';
+        }
+      });
+      
+      // Formatear respuesta correcta final
+      html = html.replace(/✨ RESPUESTA CORRECTA: (.+)/g, '<div style="background:linear-gradient(135deg,#065f46,#059669);padding:1rem;border-radius:8px;margin:1rem 0;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,0.3)"><strong style="color:#d1fae5;font-size:1.1rem">✨ RESPUESTA CORRECTA: $1</strong></div>');
+      
+      // Formatear encuestas
+      html = html.replace(/│\s+(📊 ENCUESTA .+?)\s+│/g, '<div style="padding:0.5rem;background:#7c3aed;border-radius:4px;color:#fef3c7;font-weight:bold;text-align:center">$1</div><div style="padding:0.5rem">');
+      
+      // Formatear secciones principales
+      html = html.replace(/═{60}/g, '<hr style="border:none;border-top:2px solid #475569;margin:1.5rem 0">');
+      html = html.replace(/─{60}/g, '<hr style="border:none;border-top:1px solid #334155;margin:1rem 0">');
+      
+      // Formatear emojis y títulos importantes
+      html = html.replace(/(📊 INFORMACIÓN DEL QUIZ|❓ PREGUNTAS Y RESPUESTAS|✅ RESPUESTAS OBTENIDAS EXITOSAMENTE)/g, '<h3 style="color:#60a5fa;text-align:center;margin:1.5rem 0">$1</h3>');
+      
+      // Formatear información del quiz
+      html = html.replace(/(🎯 Título: )(.+)/g, '<div style="margin:0.5rem 0"><strong style="color:#fbbf24">$1</strong><span style="color:#e2e8f0">$2</span></div>');
+      html = html.replace(/(📄 Descripción: )(.+)/g, '<div style="margin:0.5rem 0"><strong style="color:#fbbf24">$1</strong><span style="color:#cbd5e1">$2</span></div>');
+      html = html.replace(/(👤 Creador: )(.+)/g, '<div style="margin:0.5rem 0"><strong style="color:#fbbf24">$1</strong><span style="color:#e2e8f0">$2</span></div>');
+      html = html.replace(/(📋 Total de preguntas: )(\d+)/g, '<div style="background:#1e3a8a;padding:0.75rem;border-radius:6px;margin:1rem 0;text-align:center"><strong style="color:#fef3c7">$1<span style="font-size:1.5rem;color:#60a5fa">$2</span></strong></div>');
+      
+      // Convertir saltos de línea
+      html = html.replace(/\n/g, '<br>');
+      
+      return html;
+    }
 
-        <h3 style="color:#94a3b8;margin-top:2rem">Rendimiento por Bot</h3>
-        <div style="max-height:400px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px">
-          <table style="width:100%;border-collapse:collapse;color:#e2e8f0;font-size:0.9rem">
-            <thead>
-              <tr style="border-bottom:2px solid #334155;position:sticky;top:0;background:#1e293b">
-                <th style="padding:0.5rem;text-align:left">Bot</th>
-                <th style="padding:0.5rem;text-align:center">Correctas</th>
-                <th style="padding:0.5rem;text-align:center">Score</th>
-                <th style="padding:0.5rem;text-align:center">Progreso</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for bot in job.result.bots %}
-                <tr style="border-bottom:1px solid #334155">
-                  <td style="padding:0.5rem;font-family:monospace">{{ bot.name }}</td>
-                  <td style="padding:0.5rem;text-align:center">{{ bot.correct }}</td>
-                  <td style="padding:0.5rem;text-align:center;color:#a78bfa;font-weight:bold">{{ "%.0f"|format(bot.correct * 100.0 / job.result.n_questions) }}%</td>
-                  {% set pct = 0 %}
-                  {% if job.result.n_questions and job.result.n_questions != 0 %}
-                    {% set pct = ((bot.correct * 100.0) / job.result.n_questions)|int %}
-                  {% endif %}
-                  <td style="padding:0.5rem">
-                    <div style="background:#334155;height:8px;border-radius:4px;overflow:hidden">
-                        <div class="bot-progress" data-pct="{{ pct }}"></div>
-                    </div>
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    function updateOutput(text) {
+      const outputEl = document.getElementById('output-container');
+      if (text.includes('PREGUNTA #')) {
+        // Si contiene preguntas de Kahoot, formatear
+        outputEl.innerHTML = formatKahootOutput(text);
+      } else {
+        // Output normal sin formato especial
+        outputEl.innerHTML = '<pre style="margin:0;white-space:pre-wrap;font-family:monospace">' + text + '</pre>';
+      }
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
 
-    {% elif job.type == 'graphical' %}
-      <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-        <h2 style="color:#60a5fa;margin-top:0">🖥️ Resultados de GUI</h2>
-        
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1rem 0">
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Total Eventos</div>
-            <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ job.result.events }}</div>
-          </div>
-          <div style="background:#1e293b;padding:1rem;border-radius:4px;text-align:center">
-            <div style="color:#64748b;font-size:0.85rem">Tiempo Total</div>
-            <div style="color:#fcd34d;font-size:2rem;font-weight:bold;margin-top:0.5rem">{{ "%.3f"|format(job.result.elapsed_s) }}s</div>
-          </div>
-        </div>
+    // Mostrar output inicial
+    updateOutput(currentOutput);
 
-        <h3 style="color:#94a3b8;margin-top:2rem">Log de Eventos</h3>
-        <div style="max-height:400px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px;font-family:monospace;font-size:0.85rem">
-          {% if job.result.log %}
-            <p>Log: <a href="{{ url_for('download_log', jobid=job.id) }}">Descargar</a></p>
-            <pre>{{ job.result.output }}</pre>
-          {% else %}
-            <pre>{{ job.result.output }}</pre>
+    function updateJobStatus() {
+      fetch(`/admin/job_status/${jobId}`)
+        .then(res => res.json())
+        .then(data => {
+          // Actualizar estado
+          const statusEl = document.getElementById('job-status');
+          let statusHtml = '';
+          if (data.status === 'running') {
+            statusHtml = '<span style="color:#fbbf24">⚡ Ejecutando</span>';
+          } else if (data.status === 'completed') {
+            statusHtml = '<span style="color:#10b981">✅ Completado</span>';
+            if (pollInterval) {
+              clearInterval(pollInterval);
+              setTimeout(() => location.reload(), 2000);
+            }
+          } else if (data.status === 'failed') {
+            statusHtml = '<span style="color:#ef4444">❌ Fallido</span>';
+            if (pollInterval) clearInterval(pollInterval);
+          } else if (data.status === 'stopped') {
+            statusHtml = '<span style="color:#f59e0b">⏸️ Detenido</span>';
+            if (pollInterval) clearInterval(pollInterval);
+          } else if (data.status === 'timeout') {
+            statusHtml = '<span style="color:#f59e0b">⏱️ Timeout</span>';
+            if (pollInterval) clearInterval(pollInterval);
+          } else if (data.status === 'error') {
+            statusHtml = '<span style="color:#ef4444">❌ Error</span>';
+            if (pollInterval) clearInterval(pollInterval);
+          }
+          statusEl.innerHTML = statusHtml;
+
+          // Actualizar output
+          if (data.new_lines && data.new_lines.length > 0) {
+            data.new_lines.forEach(line => {
+              currentOutput += line + '\n';
+            });
+            updateOutput(currentOutput);
+          } else if (data.output) {
+            currentOutput = data.output;
+            updateOutput(currentOutput);
+          }
+        })
+        .catch(err => console.error('Error polling job:', err));
+    }
+
+    // Iniciar polling si el job está corriendo
+    if (jobStatus === 'running') {
+      pollInterval = setInterval(updateJobStatus, 2000);
+    }
+  </script>
+
+  {% if job.status in ['completed', 'failed', 'timeout'] and job.result %}
+    <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
+      <h2 style="color:#60a5fa;margin-top:0">📈 Métricas</h2>
+      
+      {% if job.type == 'flood' and job.result.n_bots %}
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem">
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Bots Totales</div>
+            <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.25rem">{{ job.result.n_bots }}</div>
+          </div>
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Conectados</div>
+            <div style="color:#10b981;font-size:2rem;font-weight:bold;margin-top:0.25rem">{{ job.result.connected }}</div>
+          </div>
+          {% if job.result.latency %}
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Latencia Min</div>
+            <div style="color:#e2e8f0;font-size:1.5rem;font-weight:bold;margin-top:0.25rem">{{ job.result.latency.min }}ms</div>
+          </div>
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Latencia Max</div>
+            <div style="color:#e2e8f0;font-size:1.5rem;font-weight:bold;margin-top:0.25rem">{{ job.result.latency.max }}ms</div>
+          </div>
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Latencia Avg</div>
+            <div style="color:#fbbf24;font-size:1.5rem;font-weight:bold;margin-top:0.25rem">{{ job.result.latency.avg }}ms</div>
+          </div>
           {% endif %}
         </div>
-      </div>
-    {% endif %}
+      {% elif job.type == 'answers' and job.result.n_questions %}
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem">
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Preguntas</div>
+            <div style="color:#60a5fa;font-size:2rem;font-weight:bold;margin-top:0.25rem">{{ job.result.n_questions }}</div>
+          </div>
+          <div style="background:#1e293b;padding:1rem;border-radius:4px">
+            <div style="color:#64748b;font-size:0.85rem">Precisión</div>
+            <div style="color:#10b981;font-size:2rem;font-weight:bold;margin-top:0.25rem">{{ (job.result.accuracy * 100) | round(1) }}%</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if job.result.exit_code is defined %}
+        <div style="margin-top:1rem;padding:1rem;background:#1e293b;border-radius:4px">
+          <div style="color:#64748b;font-size:0.85rem">Exit Code</div>
+          <div style="color:{{ '#10b981' if job.result.exit_code == 0 else '#ef4444' }};font-family:monospace;margin-top:0.25rem">{{ job.result.exit_code }}</div>
+        </div>
+      {% endif %}
+    </div>
   {% endif %}
 
-  <!-- Sección de salida en tiempo real -->
-  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-    <h3 style="color:#60a5fa;margin-top:0">📄 Salida en Tiempo Real</h3>
-    <div id="job-status-badge" style="display:inline-block;padding:0.25rem 0.75rem;border-radius:3px;background:#1a2f1a;color:#86efac;font-size:0.9rem;margin-bottom:1rem">
-      Estado: <span id="status-text">{{ job.status }}</span>
+  {% if job.params %}
+    <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
+      <h2 style="color:#60a5fa;margin-top:0">⚙️ Parámetros de Ejecución</h2>
+      <div style="background:#1e293b;padding:1rem;border-radius:4px;font-family:monospace;font-size:0.9rem;color:#e2e8f0">
+        <pre style="margin:0">{{ job.params | tojson(indent=2) }}</pre>
+      </div>
     </div>
-    <div id="live-output" style="max-height:500px;overflow-y:auto;background:#1e293b;padding:1rem;border-radius:4px;font-family:monospace;font-size:0.85rem;white-space:pre-wrap;color:#e2e8f0">
-      {{ job.result.output or 'Iniciando ejecución...' }}
+  {% endif %}
+
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
+    <h2 style="color:#60a5fa;margin-top:0">🕐 Timestamps</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1rem">
+      <div style="background:#1e293b;padding:1rem;border-radius:4px">
+        <div style="color:#64748b;font-size:0.85rem">Creado</div>
+        <div style="color:#e2e8f0;font-family:monospace;margin-top:0.25rem">{{ job.created_at[:19].replace('T', ' ') }}</div>
+      </div>
+      {% if job.completed_at %}
+      <div style="background:#1e293b;padding:1rem;border-radius:4px">
+        <div style="color:#64748b;font-size:0.85rem">Completado</div>
+        <div style="color:#e2e8f0;font-family:monospace;margin-top:0.25rem">{{ job.completed_at[:19].replace('T', ' ') }}</div>
+      </div>
+      {% endif %}
     </div>
-    {% if job.result.log %}
-      <p style="margin-top:1rem"><a href="{{ url_for('download_log', jobid=job.id) }}" style="color:#60a5fa">💾 Descargar log completo</a></p>
-    {% endif %}
   </div>
 
-  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-    <h3 style="color:#60a5fa;margin-top:0">🔧 Acciones</h3>
-    <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn" style="background:#059669;margin-right:1rem">💾 Descargar JSON</a>
-    <a href="{{ url_for('admin') }}" class="btn" style="background:#2563eb">← Volver al Panel</a>
-  </div>
   <script>
-    // Aplicar estilos dinámicos basados en data-attributes
-    document.addEventListener('DOMContentLoaded', function(){
-      document.querySelectorAll('.errors-count').forEach(function(el){
-        var c = el.getAttribute('data-color') || '#86efac';
-        el.style.color = c;
-        el.style.fontSize = '2rem';
-        el.style.fontWeight = 'bold';
-        el.style.marginTop = '0.5rem';
-      });
-      document.querySelectorAll('.bot-progress').forEach(function(el){
-        var pct = parseInt(el.getAttribute('data-pct') || '0', 10);
-        el.style.background = '#86efac';
-        el.style.height = '100%';
-        el.style.width = pct + '%';
-      });
-
-      // Polling para actualizar salida en tiempo real
-      var jobId = '{{ job.id }}';
-      var currentStatus = '{{ job.status }}';
-      var pollInterval = null;
-
-      function updateJobStatus() {
-        fetch('/admin/job_status/' + jobId)
-          .then(function(response) {
-            if (!response.ok) throw new Error('Error al obtener estado del job');
-            return response.json();
-          })
-          .then(function(data) {
-            // Actualizar estado
-            var statusEl = document.getElementById('status-text');
-            var badgeEl = document.getElementById('job-status-badge');
-            var outputEl = document.getElementById('live-output');
-
-            if (statusEl) statusEl.textContent = data.status;
-            
-            // Actualizar color del badge según estado
-            if (badgeEl) {
-              if (data.status === 'success') {
-                badgeEl.style.background = '#1a2f1a';
-                badgeEl.style.color = '#86efac';
-              } else if (data.status === 'error') {
-                badgeEl.style.background = '#2f1a1a';
-                badgeEl.style.color = '#fca5a5';
-              } else if (data.status === 'running') {
-                badgeEl.style.background = '#1a2a2f';
-                badgeEl.style.color = '#60a5fa';
-              }
-            }
-
-            // Actualizar salida
-            if (outputEl && data.output) {
-              outputEl.textContent = data.output;
-              // Auto-scroll al final
-              outputEl.scrollTop = outputEl.scrollHeight;
-            }
-
-            // Detener polling si el job terminó
-            if (data.status === 'success' || data.status === 'error') {
-              if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-                console.log('Job finalizado, polling detenido');
-              }
-            }
-
-            currentStatus = data.status;
-          })
-          .catch(function(err) {
-            console.error('Error en polling:', err);
-          });
-      }
-
-      // Iniciar polling solo si el job está running
-      if (currentStatus === 'running') {
-        // Primera actualización inmediata
-        updateJobStatus();
-        // Luego cada 2 segundos
-        pollInterval = setInterval(updateJobStatus, 2000);
-      }
-    });
-  </script>
 {% endblock %}

@@ -1,0 +1,22 @@
+{
+  "id": "20251023155352936346",
+  "type": "gui",
+  "params": {
+    "pin": "8906200",
+    "n": 50,
+    "minlat": 50,
+    "maxlat": 300,
+    "q": 10,
+    "acc": 0.8,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T15:53:52.936378Z",
+  "status": "failed",
+  "result": {
+    "output": "[DEBUG] Ejecutando: /home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode graphical --e 1\n[DEBUG] Working directory: /workspaces/Kitty-Tools\nusage: main.py [-h] [--mode {flood,answers,graphical}] [--n N]\n               [--minlat MINLAT] [--maxlat MAXLAT] [--q Q] [--acc ACC]\n               [--pin PIN] [--name NAME]\nmain.py: error: unrecognized arguments: --e 1",
+    "command": "/home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode graphical --e 1",
+    "exit_code": 2
+  },
+  "completed_at": "2025-10-23T15:53:52.989667Z"
+}

@@ -1,33 +1,172 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Menú principal</h1>
-  <p>Herramientas de Kahoot disponibles desde la interfaz web.</p>
-
-  <!-- Botón destacado al panel de admin -->
-  <div class="card" style="background:linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);border:2px solid #60a5fa;margin-bottom:2rem">
-    <h2 style="color:#fff;margin-top:0;display:flex;align-items:center;gap:0.5rem">
-      ⚙️ Panel de Administración
-    </h2>
-    <p style="color:#dbeafe;font-size:1.1rem">Ejecuta scripts de Kahoot con parámetros personalizados desde una interfaz visual moderna.</p>
-    <a class="btn" href="{{ url_for('admin') }}" style="background:#fff;color:#1e3a8a;font-weight:bold;font-size:1.1rem;padding:0.75rem 2rem;display:inline-block;margin-top:0.5rem">
-      🚀 Ir al Panel de Admin
-    </a>
-  </div>
-
-  {% for item in menu_items %}
-    <div class="card {% if not item.enabled %}disabled{% endif %}">
-      <strong>{{ loop.index }}. {{ item.label }}</strong>
-      <p>{{ item.description }}</p>
-      {% if item.enabled %}
-        <a class="btn" href="{{ url_for(item.id) }}">Abrir</a>
-      {% else %}
-        <span class="btn" style="background:#444">No disponible</span>
-      {% endif %}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem">
+  <h1 style="margin:0">Panel de Control Kitty Tools</h1>
+    <div style="display:flex;gap:1rem;align-items:center">
+      <span style="color:#94a3b8">👤 {{ session.user }}</span>
+      <a href="{{ url_for('logout') }}" class="btn" style="background:#ef4444;padding:0.5rem 1rem">🚪 Cerrar Sesión</a>
     </div>
-  {% endfor %}
-
-  <div class="card">
-    <strong>Modo del repositorio</strong>
-    <p>{% if src_available %}<span style="color:#86efac">Enhanced (src disponible)</span>{% else %}<span style="color:#fca5a5">Standard</span>{% endif %}</p>
   </div>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message" style="padding:0.75rem;margin-bottom:1rem;border-radius:8px;background:{% if category=='success' %}#10b98144{% elif category=='danger' or category=='error' %}#ef444444{% else %}#f59e0b44{% endif %};border-left:4px solid {% if category=='success' %}#10b981{% elif category=='danger' or category=='error' %}#ef4444{% else %}#f59e0b{% endif %};animation:slideIn 0.3s ease">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-bottom:2rem">
+    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Simulación</h2>
+    <form method="POST" action="{{ url_for('admin_simulate') }}" style="display:grid;gap:1rem">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      
+      <div>
+        <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Tipo de Simulación</label>
+        <select name="sim_type" id="sim_type" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem;cursor:pointer" onchange="updateParams()">
+          <option value="flood">🌊 Kahoot Flood - Inundar con bots</option>
+          <option value="answers">📝 Answer Hack - Obtener respuestas</option>
+          <option value="gui">🖥️ GUI Mode - Interfaz gráfica</option>
+        </select>
+      </div>
+
+      <div id="pin_field_container">
+        <label for="pin_input" style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">PIN del Juego</label>
+        <input id="pin_input" type="text" name="pin" placeholder="Ej: 123456" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+        <small style="color:#94a3b8;display:block;margin-top:0.25rem">PIN de 6-7 dígitos del juego de Kahoot (requerido para GUI y Flood; opcional en Answers si usas Quiz ID)</small>
+      </div>
+
+      <!-- Parámetros para Flood -->
+      <div id="flood_params" style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Número de Bots</label>
+          <input type="number" name="param_n" value="50" min="1" max="500" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+          <small style="color:#94a3b8;display:block;margin-top:0.25rem">1-500 bots</small>
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Latencia Mínima (ms)</label>
+          <input type="number" name="param_minlat" value="50" min="0" max="5000" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Latencia Máxima (ms)</label>
+          <input type="number" name="param_maxlat" value="300" min="0" max="5000" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Nombre de Bot</label>
+          <input type="text" name="param_name" placeholder="Bot" value="KittyBot" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+        </div>
+      </div>
+
+      <!-- Parámetros para Answers -->
+      <div id="answers_params" style="display:none;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Quiz ID (UUID)</label>
+          <input type="text" name="param_quiz_id" placeholder="Ej: f9822c0e-f70b-4987-9f86-51b87e38f001" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+          <small style="color:#94a3b8;display:block;margin-top:0.25rem">Opcional si usas PIN - UUID del quiz</small>
+        </div>
+      </div>
+
+      <!-- Parámetros para GUI -->
+      <div id="gui_params" style="display:none">
+        <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0;font-weight:600">Parámetro E</label>
+        <input type="number" name="param_e" value="1" min="0" max="10" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#e2e8f0;font-size:1rem">
+      </div>
+
+      <button type="submit" class="btn" style="background:linear-gradient(135deg,#10b981,#059669);padding:1rem;font-size:1.1rem;font-weight:600;box-shadow:0 4px 15px rgba(16,185,129,0.3)">
+        ▶️ Ejecutar Simulación
+      </button>
+    </form>
+  </div>
+
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
+    <h2 style="color:#60a5fa;margin-top:0">📋 Historial de Jobs</h2>
+    {% if jobs %}
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:#1e293b">
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155;color:#e2e8f0">ID</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155;color:#e2e8f0">Tipo</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155;color:#e2e8f0">Estado</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155;color:#e2e8f0">Fecha</th>
+              <th style="padding:0.75rem;text-align:center;border-bottom:2px solid #334155;color:#e2e8f0">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+              <tr style="border-bottom:1px solid #334155;transition:background 0.2s ease" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='transparent'">
+                <td style="padding:0.75rem;font-family:monospace;font-size:0.85rem;color:#94a3b8">{{ job.id[:12] }}...</td>
+                <td style="padding:0.75rem">
+                  {% if job.type == 'flood' %}🌊 Flood
+                  {% elif job.type == 'answers' %}📝 Answers
+                  {% elif job.type == 'gui' %}🖥️ GUI
+                  {% else %}{{ job.type }}{% endif %}
+                </td>
+                <td style="padding:0.75rem">
+                  {% if job.status == 'running' %}
+                    <span style="color:#fbbf24;animation:pulse 2s infinite">⚡ Ejecutando</span>
+                  {% elif job.status == 'completed' %}
+                    <span style="color:#10b981">✅ Completado</span>
+                  {% elif job.status == 'failed' %}
+                    <span style="color:#ef4444">❌ Fallido</span>
+                  {% elif job.status == 'stopped' %}
+                    <span style="color:#f59e0b">⏸️ Detenido</span>
+                  {% else %}
+                    <span style="color:#94a3b8">{{ job.status }}</span>
+                  {% endif %}
+                </td>
+                <td style="padding:0.75rem;font-size:0.85rem;color:#94a3b8">{{ job.created_at[:19].replace('T',' ') }}</td>
+                <td style="padding:0.75rem;text-align:center">
+                  <a href="{{ url_for('view_job', jobid=job.id) }}" class="btn" style="padding:0.5rem 1rem;margin-right:0.5rem;font-size:0.9rem;background:#2563eb">👁️ Ver</a>
+                  <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn" style="padding:0.5rem 1rem;font-size:0.9rem;background:#059669">💾 Descargar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="text-align:center;padding:3rem">
+        <div style="font-size:4rem;margin-bottom:1rem">📭</div>
+        <p style="color:#64748b;font-size:1.1rem">No hay jobs registrados aún.</p>
+        <p style="color:#64748b">¡Ejecuta tu primera simulación arriba!</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function updateParams() {
+      const simType = document.getElementById('sim_type').value;
+      document.getElementById('flood_params').style.display = simType === 'flood' ? 'grid' : 'none';
+      document.getElementById('answers_params').style.display = simType === 'answers' ? 'grid' : 'none';
+      document.getElementById('gui_params').style.display = simType === 'gui' ? 'block' : 'none';
+      // Requerimientos dinámicos del PIN
+      const pinInput = document.getElementById('pin_input');
+      if (simType === 'gui' || simType === 'flood') {
+        pinInput.setAttribute('required', 'required');
+      } else {
+        pinInput.removeAttribute('required');
+      }
+    }
+    updateParams();
+  </script>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 {% endblock %}

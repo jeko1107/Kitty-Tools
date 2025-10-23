@@ -1,0 +1,20 @@
+{
+  "id": "20251023174558707665",
+  "type": "flood",
+  "params": {
+    "pin": "544464",
+    "n": 5,
+    "minlat": 50,
+    "maxlat": 300,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T17:45:58.707715Z",
+  "status": "stopped",
+  "result": {
+    "output": "[DEBUG] Ejecutando: /home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode flood --pin 544464 --n 5 --minlat 50 --maxlat 300\n[DEBUG] Working directory: /workspaces/Kitty-Tools\n\ud83c\udf0a Kahoot Flooder - Iniciado (MODO REAL)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:     544464\n   N\u00famero de bots:    5\n   Latencia m\u00ednima:   50ms\n   Latencia m\u00e1xima:   300ms\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u2705 Node.js detectado: v22.17.0\n\n\ufffd EJECUTANDO FLOOD REAL CON NODE.JS...\n\n\u001b]2;flood.js\u001b\\==================================================\nMade by ZaWarudo1\nEnhancements by; CPScript\n==================================================\nMy own version will be made soon with;\n\n> Better answer handling\n> Better error handling\n> Better UI\n==================================================\n\n[DEBUG] Read 8 lines from stdin\nUse the new antibot mode? (y/n)> n\nEnter Game PIN --> 544464\nEnter number of bots --> 5\nAnswer delay in milliseconds (1-1000, recommended 500-2000) --> 50\nAnswer delay set to: 50ms\nUse random name? (y/n) --> n\nEnter name --> Bot\nUse name bypass? (y/n) --> n\nControl the bots manually? (y/n) --> n\nJoining bots\nAll join requests have finished.\nClient -1 failed to join with the error 'Duplicate name'\n\n[DETENIDO POR EL USUARIO]",
+    "command": "/home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode flood --pin 544464 --n 5 --minlat 50 --maxlat 300",
+    "exit_code": -15
+  },
+  "completed_at": "2025-10-23T17:46:10.634457Z"
+}

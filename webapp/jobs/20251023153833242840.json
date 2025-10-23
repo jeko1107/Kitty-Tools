@@ -1,0 +1,29 @@
+{
+  "id": "20251023153833242840",
+  "type": "flood",
+  "params": {
+    "pin": "8906200",
+    "n": 5,
+    "minlat": 50,
+    "maxlat": 300,
+    "name": "jeko",
+    "q": 10,
+    "acc": 0.8,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T15:38:33.242898Z",
+  "status": "completed",
+  "result": {
+    "output": "\ud83c\udf0a Kahoot Flooder - Iniciado (MODO REAL)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:     8906200\n   N\u00famero de bots:    5\n   Latencia m\u00ednima:   50ms\n   Latencia m\u00e1xima:   300ms\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u2705 Node.js detectado: v22.17.0\n\n\ufffd EJECUTANDO FLOOD REAL CON NODE.JS...\n\n\u001b]2;flood.js\u001b\\==================================================\nMade by ZaWarudo1\nEnhancements by; CPScript\n==================================================\nMy own version will be made soon with;\n\n> Better answer handling\n> Better error handling\n> Better UI\n==================================================\n\nstty: when specifying an output style, modes may not be set\n/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/read.sh: 49: cannot create /dev/tty: No such device or address\nstty: invalid argument \u2018-f\u2019\nTry 'stty --help' for more information.\n/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:259\n    if (res.error) { throw res.error; }\n                     ^\n\nError: The current environment doesn't support interactive reading from TTY.\nstty: when specifying an output style, modes may not be set\n/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/read.sh: 49: cannot create /dev/tty: No such device or address\nstty: invalid argument \u2018-f\u2019\nTry 'stty --help' for more information.\n    at readlineExt (/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:221:19)\n    at tryExt (/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:258:15)\n    at /workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:363:15\n    at _readlineSync (/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:433:5)\n    at getValidLine (/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:775:11)\n    at exports.question (/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/readline-sync.js:857:10)\n    at Object.<anonymous> (/workspaces/Kitty-Tools/Kitty/Flood/flood.js:111:24)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32) {\n  method: 'execFileSync',\n  program: '/bin/sh',\n  args: [\n    '/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/read.sh',\n    '--display',\n    'Use#32;the#32;new#32;antibot#32;mode#63;#32;#40;y#47;n#41;#62;#32;',\n    '--mask',\n    '#42;'\n  ],\n  extMessage: 'stty: when specifying an output style, modes may not be set\\n' +\n    '/workspaces/Kitty-Tools/Kitty/Flood/node_modules/readline-sync/lib/read.sh: 49: cannot create /dev/tty: No such device or address\\n' +\n    'stty: invalid argument \u2018-f\u2019\\n' +\n    \"Try 'stty --help' for more information.\",\n  exitCode: 1,\n  code: undefined,\n  signal: null\n}\n\nNode.js v22.17.0\n\n\n\u26a0\ufe0f  Flood finalizado con c\u00f3digo: 1",
+    "exit_code": 0,
+    "n_bots": 5,
+    "connected": 5,
+    "latency": {
+      "min": 50,
+      "max": 300,
+      "avg": 175.0
+    }
+  },
+  "completed_at": "2025-10-23T15:38:36.403777Z"
+}

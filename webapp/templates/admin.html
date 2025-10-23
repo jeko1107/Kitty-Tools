@@ -4,136 +4,114 @@
   
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <div class="card" style="margin-bottom:1rem">
-        {% for cat, msg in messages %}
-          <div style="padding:0.5rem;margin:0.25rem 0;background:{{ '#1a2f1a' if cat=='success' else '#2f1a1a' }};border-left:3px solid {{ '#86efac' if cat=='success' else '#fca5a5' }};color:{{ '#86efac' if cat=='success' else '#fca5a5' }}">
-            {{ msg }}
-          </div>
-        {% endfor %}
-      </div>
+      {% for category, message in messages %}
+        <div style="padding:0.75rem;margin-bottom:1rem;border-radius:4px;background:{% if category=='success' %}#10b98144{% elif category=='danger' or category=='error' %}#ef444444{% else %}#f59e0b44{% endif %};border-left:4px solid {% if category=='success' %}#10b981{% elif category=='danger' or category=='error' %}#ef4444{% else %}#f59e0b{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
     {% endif %}
   {% endwith %}
 
-  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
-    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Script</h2>
-    <p style="color:#94a3b8">Configura y ejecuta las herramientas de Kahoot. Los resultados se mostrarán en tiempo real.</p>
-    
-    <form method="post" action="{{ url_for('admin_simulate') }}" style="margin-top:1rem">
-      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-bottom:2rem">
+    <h2 style="color:#60a5fa;margin-top:0">🚀 Ejecutar Simulación</h2>
+    <form method="POST" action="{{ url_for('admin_simulate') }}" style="display:grid;gap:1rem">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
       
-      <div style="margin-bottom:1rem">
-        <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">Tipo de Herramienta</label>
-        <select name="sim_type" id="sim_type" style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem" onchange="updateParamsPlaceholder()">
-          <option value="flood">🌊 Kahoot Flood - Enviar múltiples bots</option>
-          <option value="answers">📝 Answer Hack - Obtener respuestas</option>
-          <option value="graphical">🖥️ GUI - Interfaz gráfica</option>
+      <div>
+        <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Tipo de Simulación</label>
+        <select name="sim_type" id="sim_type" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0" onchange="updateParams()">
+          <option value="flood">🌊 Kahoot Flood</option>
+          <option value="answers">📝 Answer Hack</option>
+          <option value="gui">🖥️ GUI Mode</option>
         </select>
       </div>
 
-      <!-- Parámetros separados en casillas individuales -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem" id="params_grid">
-        
-        <!-- Número de bots / elementos -->
-        <div>
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            <span id="label_n">🤖 Número de Bots</span>
-          </label>
-          <input type="number" name="param_n" id="param_n" placeholder="50" min="1" max="1000" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">Cantidad de elementos a simular</small>
-        </div>
-
-        <!-- PIN del juego -->
-        <div id="pin_field">
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            🎯 PIN del Juego
-          </label>
-          <input type="text" name="param_pin" id="param_pin" placeholder="1234567" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">PIN del Kahoot (opcional)</small>
-        </div>
-
-        <!-- Latencia mínima -->
-        <div id="minlat_field">
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            ⏱️ Latencia Mínima
-          </label>
-          <input type="number" name="param_minlat" id="param_minlat" placeholder="50" min="0" max="5000" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">En milisegundos (ms)</small>
-        </div>
-
-        <!-- Latencia máxima -->
-        <div id="maxlat_field">
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            ⏱️ Latencia Máxima
-          </label>
-          <input type="number" name="param_maxlat" id="param_maxlat" placeholder="300" min="0" max="5000" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">En milisegundos (ms)</small>
-        </div>
-
-        <!-- Número de preguntas (solo para answers) -->
-        <div id="q_field" style="display:none">
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            ❓ Número de Preguntas
-          </label>
-          <input type="number" name="param_q" id="param_q" placeholder="10" min="1" max="100" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">Cantidad de preguntas del quiz</small>
-        </div>
-
-        <!-- Precisión (solo para answers) -->
-        <div id="acc_field" style="display:none">
-          <label style="color:#e2e8f0;font-weight:bold;display:block;margin-bottom:0.5rem">
-            🎯 Precisión
-          </label>
-          <input type="number" name="param_acc" id="param_acc" placeholder="0.8" min="0" max="1" step="0.1" 
-                 style="width:100%;padding:0.5rem;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:1rem">
-          <small style="color:#64748b;display:block;margin-top:0.25rem">De 0.0 (0%) a 1.0 (100%)</small>
-        </div>
-
+      <div id="pin_field_container">
+        <label for="pin_input" style="display:block;margin-bottom:0.5rem;color:#e2e8f0">PIN del Juego</label>
+        <input id="pin_input" type="text" name="pin" placeholder="Ej: 123456" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+        <small style="color:#94a3b8;display:block;margin-top:0.25rem">Requerido para GUI y Flood; opcional en Answers si usas Quiz ID</small>
       </div>
 
-      <button class="btn" type="submit" style="background:#2563eb;color:white;padding:0.75rem 1.5rem;font-size:1rem;font-weight:bold;cursor:pointer;border:none;border-radius:4px">
-        ▶️ Ejecutar
+      <!-- Parámetros para Flood -->
+      <div id="flood_params" style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Número de Bots (n)</label>
+          <input type="number" name="param_n" value="50" min="1" max="500" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Latencia Mínima (ms)</label>
+          <input type="number" name="param_minlat" value="50" min="0" max="5000" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Latencia Máxima (ms)</label>
+          <input type="number" name="param_maxlat" value="300" min="0" max="5000" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Nombre de Bot</label>
+          <input type="text" name="param_name" placeholder="Bot" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+        </div>
+      </div>
+
+      <!-- Parámetros para Answers -->
+      <div id="answers_params" style="display:none;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Quiz ID (UUID)</label>
+          <input type="text" name="param_quiz_id" placeholder="Ej: f9822c0e-f70b-4987-9f86-51b87e38f001" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+          <small style="color:#94a3b8;display:block;margin-top:0.25rem">Opcional si usas PIN</small>
+        </div>
+      </div>
+
+      <!-- Parámetros para GUI -->
+      <div id="gui_params" style="display:none">
+        <label style="display:block;margin-bottom:0.5rem;color:#e2e8f0">Parámetro E</label>
+        <input type="number" name="param_e" value="1" min="0" max="10" style="width:100%;padding:0.75rem;border:1px solid #334155;border-radius:4px;background:#1e293b;color:#e2e8f0">
+      </div>
+
+      <button type="submit" class="btn" style="background:#10b981;padding:0.875rem;font-size:1rem">
+        ▶️ Ejecutar Simulación
       </button>
     </form>
   </div>
 
-  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f;margin-top:1.5rem">
-    <h2 style="color:#60a5fa;margin-top:0">📊 Historial de Ejecuciones</h2>
+  <div class="card" style="background:#0f1a24;border:1px solid #1e3a5f">
+    <h2 style="color:#60a5fa;margin-top:0">📋 Historial de Jobs</h2>
     {% if jobs %}
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;color:#e2e8f0">
+        <table style="width:100%;border-collapse:collapse">
           <thead>
-            <tr style="background:#1e293b;border-bottom:2px solid #334155">
-              <th style="padding:0.75rem;text-align:left">ID</th>
-              <th style="padding:0.75rem;text-align:left">Tipo</th>
-              <th style="padding:0.75rem;text-align:left">Estado</th>
-              <th style="padding:0.75rem;text-align:left">Usuario</th>
-              <th style="padding:0.75rem;text-align:left">Fecha</th>
-              <th style="padding:0.75rem;text-align:left">Acciones</th>
+            <tr style="background:#1e293b">
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155">ID</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155">Tipo</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155">Estado</th>
+              <th style="padding:0.75rem;text-align:left;border-bottom:2px solid #334155">Fecha</th>
+              <th style="padding:0.75rem;text-align:center;border-bottom:2px solid #334155">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {% for job in jobs %}
-              <tr style="border-bottom:1px solid #334155;{{ 'background:#1a2f1a' if job.status == 'simulated' else '' }}">
+              <tr style="border-bottom:1px solid #334155">
                 <td style="padding:0.75rem;font-family:monospace;font-size:0.85rem">{{ job.id[:12] }}...</td>
                 <td style="padding:0.75rem">
                   {% if job.type == 'flood' %}🌊 Flood
                   {% elif job.type == 'answers' %}📝 Answers
-                  {% elif job.type == 'graphical' %}🖥️ GUI
+                  {% elif job.type == 'gui' %}🖥️ GUI
                   {% else %}{{ job.type }}{% endif %}
                 </td>
                 <td style="padding:0.75rem">
-                  <span style="padding:0.25rem 0.5rem;border-radius:3px;background:{{ '#1a2f1a' if job.status == 'simulated' else '#2f2a1a' }};color:{{ '#86efac' if job.status == 'simulated' else '#fcd34d' }}">
-                    {{ job.status }}
-                  </span>
+                  {% if job.status == 'running' %}
+                    <span style="color:#fbbf24;animation:pulse 2s infinite">⚡ Ejecutando</span>
+                  {% elif job.status == 'completed' %}
+                    <span style="color:#10b981">✅ Completado</span>
+                  {% elif job.status == 'failed' %}
+                    <span style="color:#ef4444">❌ Fallido</span>
+                  {% elif job.status == 'stopped' %}
+                    <span style="color:#f59e0b">⏸️ Detenido</span>
+                  {% else %}
+                    <span style="color:#94a3b8">{{ job.status }}</span>
+                  {% endif %}
                 </td>
-                <td style="padding:0.75rem">{{ job.user }}</td>
-                <td style="padding:0.75rem;font-size:0.85rem">{{ job.created_at[:19] }}</td>
-                <td style="padding:0.75rem">
+                <td style="padding:0.75rem;font-size:0.85rem;color:#94a3b8">{{ job.created_at[:19].replace('T',' ') }}</td>
+                <td style="padding:0.75rem;text-align:center">
                   <a href="{{ url_for('view_job', jobid=job.id) }}" class="btn" style="padding:0.35rem 0.7rem;margin-right:0.5rem;font-size:0.85rem;background:#2563eb">👁️ Ver</a>
                   <a href="{{ url_for('download_job', jobid=job.id) }}" class="btn" style="padding:0.35rem 0.7rem;font-size:0.85rem;background:#059669">💾 JSON</a>
                 </td>
@@ -143,62 +121,30 @@
         </table>
       </div>
     {% else %}
-      <p style="color:#64748b;text-align:center;padding:2rem">No hay ejecuciones registradas. ¡Ejecuta tu primer script arriba!</p>
+      <p style="color:#64748b;text-align:center;padding:2rem">No hay jobs registrados aún.</p>
     {% endif %}
   </div>
 
   <script>
-    function updateParamsPlaceholder() {
-      const type = document.getElementById('sim_type').value;
-      
-      // Campos a mostrar/ocultar
-      const pinField = document.getElementById('pin_field');
-      const minlatField = document.getElementById('minlat_field');
-      const maxlatField = document.getElementById('maxlat_field');
-      const qField = document.getElementById('q_field');
-      const accField = document.getElementById('acc_field');
-      const labelN = document.getElementById('label_n');
-      
-      if (type === 'flood') {
-        // Flood: mostrar n, pin, minlat, maxlat
-        labelN.textContent = '🤖 Número de Bots';
-        pinField.style.display = 'block';
-        minlatField.style.display = 'block';
-        maxlatField.style.display = 'block';
-        qField.style.display = 'none';
-        accField.style.display = 'none';
-        
-        document.getElementById('param_n').placeholder = '50';
-        document.getElementById('param_minlat').placeholder = '50';
-        document.getElementById('param_maxlat').placeholder = '300';
-        
-      } else if (type === 'answers') {
-        // Answers: mostrar n, pin, q, acc
-        labelN.textContent = '🤖 Número de Bots';
-        pinField.style.display = 'block';
-        minlatField.style.display = 'none';
-        maxlatField.style.display = 'none';
-        qField.style.display = 'block';
-        accField.style.display = 'block';
-        
-        document.getElementById('param_n').placeholder = '50';
-        document.getElementById('param_q').placeholder = '10';
-        document.getElementById('param_acc').placeholder = '0.8';
-        
-      } else if (type === 'graphical') {
-        // GUI: solo mostrar n (eventos)
-        labelN.textContent = '🖥️ Número de Eventos';
-        pinField.style.display = 'none';
-        minlatField.style.display = 'none';
-        maxlatField.style.display = 'none';
-        qField.style.display = 'none';
-        accField.style.display = 'none';
-        
-        document.getElementById('param_n').placeholder = '20';
+    function updateParams() {
+      const simType = document.getElementById('sim_type').value;
+      document.getElementById('flood_params').style.display = simType === 'flood' ? 'grid' : 'none';
+      document.getElementById('answers_params').style.display = simType === 'answers' ? 'grid' : 'none';
+      document.getElementById('gui_params').style.display = simType === 'gui' ? 'block' : 'none';
+      const pinInput = document.getElementById('pin_input');
+      if (simType === 'gui' || simType === 'flood') {
+        pinInput.setAttribute('required', 'required');
+      } else {
+        pinInput.removeAttribute('required');
       }
     }
-    
-    // Inicializar al cargar la página
-    document.addEventListener('DOMContentLoaded', updateParamsPlaceholder);
+    updateParams();
   </script>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
 {% endblock %}

@@ -1,3 +1,51 @@
+// Check if running in non-TTY mode (e.g., from webapp)
+const isNonInteractive = !process.stdin.isTTY || process.env.NODE_NO_READLINE;
+
+if (isNonInteractive) {
+  // Override readline-sync to prevent TTY access
+  const Module = require('module');
+  const originalRequire = Module.prototype.require;
+  
+  Module.prototype.require = function(id) {
+    if (id === 'readline-sync') {
+      // Return a mock readline-sync that reads from stdin buffer
+      let stdinLines = [];
+      let stdinIndex = 0;
+      let stdinRead = false;
+      
+      return {
+        question: function(prompt) {
+          if (!stdinRead) {
+            // Read all stdin synchronously
+            try {
+              const fs = require('fs');
+              const stdinBuffer = fs.readFileSync(0, 'utf-8');
+              stdinLines = stdinBuffer.split('\n').map(l => l.trim()).filter(l => l);
+              stdinRead = true;
+              console.log('[DEBUG] Read ' + stdinLines.length + ' lines from stdin');
+            } catch (e) {
+              console.log('[ERROR] Failed to read stdin:', e.message);
+            }
+          }
+          
+          if (stdinIndex < stdinLines.length) {
+            const answer = stdinLines[stdinIndex++];
+            console.log(prompt + answer);
+            return answer;
+          } else {
+            console.log(prompt + '(no input, using default)');
+            return '';
+          }
+        },
+        keyInYN: function(prompt) {
+          return this.question(prompt + ' (y/n)> ') === 'y';
+        }
+      };
+    }
+    return originalRequire.apply(this, arguments);
+  };
+}
+
 readline = require('readline-sync');
 const Kahoot = require("kahoot.js-latest");
 var words = require('an-array-of-english-words')

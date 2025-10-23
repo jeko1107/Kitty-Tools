@@ -1,0 +1,21 @@
+{
+  "id": "20251023171753242284",
+  "type": "flood",
+  "params": {
+    "pin": "544464",
+    "n": 5,
+    "minlat": 50,
+    "maxlat": 300,
+    "name": "KittyBot",
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T17:17:53.242342Z",
+  "status": "completed",
+  "result": {
+    "output": "[DEBUG] Ejecutando: /home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode flood --pin 544464 --n 5 --minlat 50 --maxlat 300 --name KittyBot\n[DEBUG] Working directory: /workspaces/Kitty-Tools\n\ud83c\udf0a Kahoot Flooder - Iniciado (MODO REAL)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:     544464\n   N\u00famero de bots:    5\n   Latencia m\u00ednima:   50ms\n   Latencia m\u00e1xima:   300ms\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u274c Node.js no disponible - requerido para flood real",
+    "command": "/home/codespace/.python/current/bin/python3 /workspaces/Kitty-Tools/main.py --mode flood --pin 544464 --n 5 --minlat 50 --maxlat 300 --name KittyBot",
+    "exit_code": 0
+  },
+  "completed_at": "2025-10-23T17:17:53.298601Z"
+}

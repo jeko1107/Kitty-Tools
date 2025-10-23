@@ -1,0 +1,29 @@
+{
+  "id": "20251023153641481241",
+  "type": "flood",
+  "params": {
+    "pin": "8906200",
+    "n": 50,
+    "minlat": 50,
+    "maxlat": 300,
+    "name": "123",
+    "q": 10,
+    "acc": 0.8,
+    "e": 1
+  },
+  "user": "admin",
+  "created_at": "2025-10-23T15:36:41.481287Z",
+  "status": "completed",
+  "result": {
+    "output": "\ud83c\udf0a Kahoot Flooder - Iniciado (MODO REAL)\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n\ud83d\udccb Configuraci\u00f3n:\n   PIN del juego:     8906200\n   N\u00famero de bots:    50\n   Latencia m\u00ednima:   50ms\n   Latencia m\u00e1xima:   300ms\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u274c Node.js no disponible - requerido para flood real",
+    "exit_code": 0,
+    "n_bots": 50,
+    "connected": 50,
+    "latency": {
+      "min": 50,
+      "max": 300,
+      "avg": 175.0
+    }
+  },
+  "completed_at": "2025-10-23T15:36:43.600393Z"
+}

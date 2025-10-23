@@ -5,39 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kitty Tools - Web</title>
     <style>
-      body{font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background:#0f1720; color:#e6eef8}
-      header{background:#0b1220;padding:1rem 1.5rem;border-bottom:1px solid #111}
-      nav a{color:#9ad1ff;margin-right:1rem;text-decoration:none}
-      .container{padding:1.5rem}
-      .card{background:#0b122014;border:1px solid #1e293b;padding:1rem;margin-bottom:1rem;border-radius:6px}
-      .disabled{opacity:0.5}
-      pre{white-space:pre-wrap;background:#071127;padding:1rem;border-radius:6px;overflow:auto}
-      footer{padding:1rem;font-size:0.9rem;color:#94a3b8}
-      .btn{display:inline-block;padding:0.35rem 0.7rem;border-radius:4px;background:#2563eb;color:white;text-decoration:none}
+      * { box-sizing: border-box; }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(1200px 600px at 10% 0%, #0a0f1f 0%, transparent 60%),
+                    radial-gradient(1000px 500px at 90% 0%, #04122a 0%, transparent 55%),
+                    linear-gradient(135deg, #030712 0%, #0b1221 50%, #0a0f1f 100%);
+        color: #e2e8f0;
+        min-height: 100vh;
+        background-attachment: fixed;
+      }
+      
+      header {
+        background: linear-gradient(135deg, rgba(16, 24, 40, 0.85) 0%, rgba(2, 6, 23, 0.7) 100%);
+        padding: 1.25rem 2rem;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 -1px 0 rgba(99,102,241,0.15);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      
+      header strong {
+        color: #e5e7eb;
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-shadow: 0 0 8px rgba(99, 102, 241, 0.35), 0 0 20px rgba(99, 102, 241, 0.2);
+      }
+      
+      nav { display: none; }
+      
+      .container {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      
+      .card {
+        background: linear-gradient(180deg, rgba(2, 6, 23, 0.7) 0%, rgba(2, 8, 23, 0.45) 100%);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(99,102,241,0.25);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.03);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      }
+      
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(99,102,241,0.45);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), 0 0 30px rgba(99,102,241,0.15);
+      }
+      
+      .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      
+      pre {
+        white-space: pre-wrap;
+        background: #0f172a;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow: auto;
+        border-left: 4px solid #3b82f6;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        max-height: 600px;
+      }
+      
+      footer {
+        padding: 2rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #a1a1aa;
+        background: linear-gradient(180deg, rgba(2,6,23,0.4) 0%, rgba(2,6,23,0.6) 100%);
+        border-top: 1px solid rgba(99,102,241,0.2);
+        margin-top: 3rem;
+      }
+      
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
+        color: #0b1221;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.25s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(34, 211, 238, 0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      }
+      
+      .btn:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 16px 40px rgba(34, 211, 238, 0.5), 0 0 20px rgba(99,102,241,0.35);
+        filter: saturate(1.2);
+      }
+      
+      .btn:active {
+        transform: translateY(0);
+      }
+      
+      h1, h2, h3 {
+        color: #c7d2fe;
+        text-shadow: 0 0 8px rgba(99, 102, 241, 0.25), 0 0 20px rgba(34, 211, 238, 0.15);
+        letter-spacing: 0.02em;
+      }
+      
+      input, select, textarea {
+        background: #1e293b;
+        border: 1px solid #475569;
+        color: #e2e8f0;
+        padding: 0.75rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      
+      input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      }
+      
+      .flash-message {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        animation: slideIn 0.3s ease;
+      }
+      
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      .kahoot-symbol {
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+      
+      .correct-answer {
+        background: rgba(34, 197, 94, 0.1);
+        border-left: 4px solid #22c55e;
+        padding: 0.5rem;
+        margin: 0.25rem 0;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
     <header>
-      <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
         <div>
-          <strong style="color:#ffd166">KITTY TOOLS</strong>
-          <span style="color:#94a3b8"> - interfaz web</span>
+          <strong>KITTY TOOLS</strong>
+          <span style="color:#8b95ff">— Interfaz Web</span>
         </div>
-        <nav>
-          <a href="{{ url_for('index') }}">Inicio</a>
-          <a href="{{ url_for('howto') }}">How to</a>
-          <a href="{{ url_for('info') }}">Info</a>
-          <a href="{{ url_for('status') }}">Estado</a>
-          <a href="{{ url_for('dependencies') }}">Dependencias</a>
-          <a href="{{ url_for('read_main') }}">Ver main.py</a>
-        </nav>
       </div>
     </header>
     <main class="container">
       {% block content %}{% endblock %}
     </main>
     <footer>
-      Kitty Tools © 2025 - Herramientas para Kahoot
+      Kitty Tools © 2025 — Herramientas para Kahoot
     </footer>
   </body>
 </html>
