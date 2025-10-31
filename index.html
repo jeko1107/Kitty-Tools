@@ -1,535 +1,1134 @@
-<!--
-Fuck you raw code!
+<!DOCTYPE html><!--
 
-Hours wasted doing this: 3.2
-Credits to creative tim
--->
+<html lang="es">Fuck you raw code!
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Kitty Tools - Kahoot Helper</title>
-    <meta property="og:title" content="Kitty Tools" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
+<head>
+
+    <meta charset="UTF-8">Hours wasted doing this: 3.2
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">Credits to creative tim
+
+    <title>Kahoot Helper - Kitty Tools</title>-->
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
-    </style>
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen","Ubuntu", "Cantarell", "Fira Sans","Droid Sans", "Helvetica Neue", sans-serif;
-        font-size: 1.12rem;
+    <style><!DOCTYPE html>
+
+        * {<html lang="en">
+
+            margin: 0;  <head>
+
+            padding: 0;    <title>Kitty Tools - Kahoot Helper</title>
+
+            box-sizing: border-box;    <meta property="og:title" content="Kitty Tools" />
+
+        }    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+
+        :root {    <meta property="twitter:card" content="summary_large_image" />
+
+            --primary: #667eea;    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+            --secondary: #764ba2;
+
+            --success: #10b981;    <style data-tag="reset-style-sheet">
+
+            --danger: #ef4444;      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+
+            --warning: #f59e0b;    </style>
+
+            --dark: #1f2937;    <style data-tag="default-style-sheet">
+
+            --light: #f3f4f6;      html {
+
+            --text: #374151;        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen","Ubuntu", "Cantarell", "Fira Sans","Droid Sans", "Helvetica Neue", sans-serif;
+
+        }        font-size: 1.12rem;
+
       }
 
-      body {
-        font-weight: 300;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.75;
-        color: var(--dl-color-gray-900);
+        body {
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;      body {
+
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);        font-weight: 300;
+
+            min-height: 100vh;        font-style:normal;
+
+            display: flex;        text-decoration: none;
+
+            align-items: center;        text-transform: none;
+
+            justify-content: center;        letter-spacing: normal;
+
+            padding: 20px;        line-height: 1.75;
+
+        }        color: var(--dl-color-gray-900);
+
         background-color: var(--dl-color-gray-white);
 
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/animate.css@4.1.1/animate.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
-    />
-  </head>
-  <body>
-    <link rel="stylesheet" href="./style.css" />
-    <div>
-      <link href="./index.css" rel="stylesheet" />
+        .container {
 
-      <div class="home-container">
-        <div class="home-hero">
-          <div class="home-bg"></div>
+            background: white;      }
+
+            border-radius: 20px;    </style>
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);    <link
+
+            max-width: 800px;      rel="stylesheet"
+
+            width: 100%;      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+
+            padding: 40px;    />
+
+            animation: fadeIn 0.5s ease;    <link
+
+        }      rel="stylesheet"
+
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+
+        @keyframes fadeIn {      data-tag="font"
+
+            from { opacity: 0; transform: translateY(20px); }    />
+
+            to { opacity: 1; transform: translateY(0); }    <link
+
+        }      rel="stylesheet"
+
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+
+        .header {    />
+
+            text-align: center;  </head>
+
+            margin-bottom: 30px;  <body>
+
+        }    <link rel="stylesheet" href="./style.css" />
+
+    <div>
+
+        .header h1 {      <link href="./index.css" rel="stylesheet" />
+
+            color: var(--primary);
+
+            font-size: 2.5em;      <div class="home-container">
+
+            margin-bottom: 10px;        <div class="home-hero">
+
+        }          <div class="home-bg"></div>
+
           <div data-role="Header" class="header-header">
-            <div class="header-container">
-              <a href="index.html" class="header-navlink">
-                <h1 class="header-heading TextSM"><span>Kitty Tools</span></h1>
-              </a>
+
+        .header p {            <div class="header-container">
+
+            color: var(--text);              <a href="index.html" class="header-navlink">
+
+            font-size: 1.1em;                <h1 class="header-heading TextSM"><span>Kitty Tools</span></h1>
+
+        }              </a>
+
               <a
-                href="https://github.com/CPScript/Kitty-Tools/archive/refs/heads/main.zip"
-                target="_blank"
-                rel="noreferrer noopener"
-                class="header-link"
-              >
-                <div class="header-container1">
+
+        .tabs {                href="https://github.com/CPScript/Kitty-Tools/archive/refs/heads/main.zip"
+
+            display: flex;                target="_blank"
+
+            gap: 10px;                rel="noreferrer noopener"
+
+            margin-bottom: 30px;                class="header-link"
+
+            border-bottom: 2px solid var(--light);              >
+
+        }                <div class="header-container1">
+
                   <svg viewBox="0 0 1024 1024" class="header-icon">
-                    <path
-                      d="M917.806 229.076c-22.212-30.292-53.174-65.7-87.178-99.704s-69.412-64.964-99.704-87.178c-51.574-37.82-76.592-42.194-90.924-42.194h-496c-44.112 0-80 35.888-80 80v864c0 44.112 35.888 80 80 80h736c44.112 0 80-35.888 80-80v-624c0-14.332-4.372-39.35-42.194-90.924zM785.374 174.626c30.7 30.7 54.8 58.398 72.58 81.374h-153.954v-153.946c22.984 17.78 50.678 41.878 81.374 72.572zM896 944c0 8.672-7.328 16-16 16h-736c-8.672 0-16-7.328-16-16v-864c0-8.672 7.328-16 16-16 0 0 495.956-0.002 496 0v224c0 17.672 14.326 32 32 32h224v624z"
-                    ></path>
-                    <path
-                      d="M736 832h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                    ></path>
-                    <path
-                      d="M736 704h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                    ></path>
-                    <path
+
+        .tab {                    <path
+
+            padding: 12px 24px;                      d="M917.806 229.076c-22.212-30.292-53.174-65.7-87.178-99.704s-69.412-64.964-99.704-87.178c-51.574-37.82-76.592-42.194-90.924-42.194h-496c-44.112 0-80 35.888-80 80v864c0 44.112 35.888 80 80 80h736c44.112 0 80-35.888 80-80v-624c0-14.332-4.372-39.35-42.194-90.924zM785.374 174.626c30.7 30.7 54.8 58.398 72.58 81.374h-153.954v-153.946c22.984 17.78 50.678 41.878 81.374 72.572zM896 944c0 8.672-7.328 16-16 16h-736c-8.672 0-16-7.328-16-16v-864c0-8.672 7.328-16 16-16 0 0 495.956-0.002 496 0v224c0 17.672 14.326 32 32 32h224v624z"
+
+            background: none;                    ></path>
+
+            border: none;                    <path
+
+            color: var(--text);                      d="M736 832h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
+
+            font-size: 1em;                    ></path>
+
+            cursor: pointer;                    <path
+
+            transition: all 0.3s;                      d="M736 704h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
+
+            border-bottom: 3px solid transparent;                    ></path>
+
+        }                    <path
+
                       d="M736 576h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                    ></path>
-                  </svg>
-                  <span class="header-text TextSM">Download</span>
+
+        .tab:hover {                    ></path>
+
+            color: var(--primary);                  </svg>
+
+        }                  <span class="header-text TextSM">Download</span>
+
                 </div>
-              </a>
-            </div>
-            <div data-role="BurgerMenu" class="header-burger-menu">
-              <svg viewBox="0 0 1024 1024" class="header-icon05">
+
+        .tab.active {              </a>
+
+            color: var(--primary);            </div>
+
+            border-bottom-color: var(--primary);            <div data-role="BurgerMenu" class="header-burger-menu">
+
+        }              <svg viewBox="0 0 1024 1024" class="header-icon05">
+
                 <path
-                  d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
-                ></path>
-              </svg>
+
+        .tab-content {                  d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"
+
+            display: none;                ></path>
+
+        }              </svg>
+
             </div>
-            <div class="header-container2">
-              <a
-                href="https://github.com/CPScript/Kitty-Tools"
-                target="_blank"
+
+        .tab-content.active {            <div class="header-container2">
+
+            display: block;              <a
+
+            animation: fadeIn 0.3s ease;                href="https://github.com/CPScript/Kitty-Tools"
+
+        }                target="_blank"
+
                 rel="noreferrer noopener"
-                class="header-link1"
-              >
-                <svg viewBox="0 0 877.7142857142857 1024" class="header-icon07">
+
+        .input-group {                class="header-link1"
+
+            margin-bottom: 20px;              >
+
+        }                <svg viewBox="0 0 877.7142857142857 1024" class="header-icon07">
+
                   <path
-                    d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
-                  ></path>
-                </svg>
-              </a>
-            </div>
-            <div data-role="MobileMenu" class="header-mobile-menu">
+
+        .input-group label {                    d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+            display: block;                  ></path>
+
+            color: var(--text);                </svg>
+
+            font-weight: 600;              </a>
+
+            margin-bottom: 8px;            </div>
+
+        }            <div data-role="MobileMenu" class="header-mobile-menu">
+
               <div class="header-top">
-                <a href="index.html" class="header-navlink1">
-                  <h1 class="header-heading1 TextSM">
-                    <span>Kitty Tools</span>
-                  </h1>
-                </a>
-                <div data-role="CloseMobileMenu" class="header-close-menu">
-                  <svg viewBox="0 0 1024 1024" class="header-icon09">
-                    <path
+
+        .input-group input {                <a href="index.html" class="header-navlink1">
+
+            width: 100%;                  <h1 class="header-heading1 TextSM">
+
+            padding: 12px;                    <span>Kitty Tools</span>
+
+            border: 2px solid var(--light);                  </h1>
+
+            border-radius: 8px;                </a>
+
+            font-size: 1em;                <div data-role="CloseMobileMenu" class="header-close-menu">
+
+            transition: border-color 0.3s;                  <svg viewBox="0 0 1024 1024" class="header-icon09">
+
+        }                    <path
+
                       d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+
+        .input-group input:focus {                    ></path>
+
+            outline: none;                  </svg>
+
+            border-color: var(--primary);                </div>
+
+        }              </div>
+
               <div class="header-mid">
-                <a href="profile.html" class="header-navlink2">
-                  <div class="header-container3">
-                    <svg viewBox="0 0 1024 1024" class="header-icon11">
-                      <path
-                        d="M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"
-                      ></path>
-                    </svg>
-                    <span class="header-text1 TextSM">PROFILE</span>
-                  </div>
-                </a>
-                <a href="blog-post.html" class="header-navlink3">
-                  <div class="header-container4">
+
+        .btn {                <a href="profile.html" class="header-navlink2">
+
+            padding: 12px 30px;                  <div class="header-container3">
+
+            border: none;                    <svg viewBox="0 0 1024 1024" class="header-icon11">
+
+            border-radius: 8px;                      <path
+
+            font-size: 1em;                        d="M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"
+
+            font-weight: 600;                      ></path>
+
+            cursor: pointer;                    </svg>
+
+            transition: all 0.3s;                    <span class="header-text1 TextSM">PROFILE</span>
+
+            display: inline-flex;                  </div>
+
+            align-items: center;                </a>
+
+            gap: 8px;                <a href="blog-post.html" class="header-navlink3">
+
+        }                  <div class="header-container4">
+
                     <svg viewBox="0 0 1024 1024" class="header-icon13">
-                      <path
-                        d="M917.806 229.076c-22.212-30.292-53.174-65.7-87.178-99.704s-69.412-64.964-99.704-87.178c-51.574-37.82-76.592-42.194-90.924-42.194h-496c-44.112 0-80 35.888-80 80v864c0 44.112 35.888 80 80 80h736c44.112 0 80-35.888 80-80v-624c0-14.332-4.372-39.35-42.194-90.924zM785.374 174.626c30.7 30.7 54.8 58.398 72.58 81.374h-153.954v-153.946c22.984 17.78 50.678 41.878 81.374 72.572zM896 944c0 8.672-7.328 16-16 16h-736c-8.672 0-16-7.328-16-16v-864c0-8.672 7.328-16 16-16 0 0 495.956-0.002 496 0v224c0 17.672 14.326 32 32 32h224v624z"
-                      ></path>
-                      <path
+
+        .btn-primary {                      <path
+
+            background: linear-gradient(135deg, var(--primary), var(--secondary));                        d="M917.806 229.076c-22.212-30.292-53.174-65.7-87.178-99.704s-69.412-64.964-99.704-87.178c-51.574-37.82-76.592-42.194-90.924-42.194h-496c-44.112 0-80 35.888-80 80v864c0 44.112 35.888 80 80 80h736c44.112 0 80-35.888 80-80v-624c0-14.332-4.372-39.35-42.194-90.924zM785.374 174.626c30.7 30.7 54.8 58.398 72.58 81.374h-153.954v-153.946c22.984 17.78 50.678 41.878 81.374 72.572zM896 944c0 8.672-7.328 16-16 16h-736c-8.672 0-16-7.328-16-16v-864c0-8.672 7.328-16 16-16 0 0 495.956-0.002 496 0v224c0 17.672 14.326 32 32 32h224v624z"
+
+            color: white;                      ></path>
+
+        }                      <path
+
                         d="M736 832h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                      ></path>
+
+        .btn-primary:hover {                      ></path>
+
+            transform: translateY(-2px);                      <path
+
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);                        d="M736 704h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
+
+        }                      ></path>
+
                       <path
-                        d="M736 704h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                      ></path>
-                      <path
-                        d="M736 576h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
-                      ></path>
-                    </svg>
-                    <span class="header-text2 TextSM">BLOG</span>
+
+        .btn:disabled {                        d="M736 576h-448c-17.672 0-32-14.326-32-32s14.328-32 32-32h448c17.674 0 32 14.326 32 32s-14.326 32-32 32z"
+
+            opacity: 0.5;                      ></path>
+
+            cursor: not-allowed;                    </svg>
+
+        }                    <span class="header-text2 TextSM">BLOG</span>
+
                   </div>
-                </a>
-              </div>
-              <div class="header-bot">
-                <svg viewBox="0 0 877.7142857142857 1024" class="header-icon18">
-                  <path
-                    d="M713.143 73.143c90.857 0 164.571 73.714 164.571 164.571v548.571c0 90.857-73.714 164.571-164.571 164.571h-107.429v-340h113.714l17.143-132.571h-130.857v-84.571c0-38.286 10.286-64 65.714-64l69.714-0.571v-118.286c-12-1.714-53.714-5.143-101.714-5.143-101.143 0-170.857 61.714-170.857 174.857v97.714h-114.286v132.571h114.286v340h-304c-90.857 0-164.571-73.714-164.571-164.571v-548.571c0-90.857 73.714-164.571 164.571-164.571h548.571z"
-                  ></path></svg
+
+        .results {                </a>
+
+            margin-top: 30px;              </div>
+
+            padding: 20px;              <div class="header-bot">
+
+            background: var(--light);                <svg viewBox="0 0 877.7142857142857 1024" class="header-icon18">
+
+            border-radius: 8px;                  <path
+
+            display: none;                    d="M713.143 73.143c90.857 0 164.571 73.714 164.571 164.571v548.571c0 90.857-73.714 164.571-164.571 164.571h-107.429v-340h113.714l17.143-132.571h-130.857v-84.571c0-38.286 10.286-64 65.714-64l69.714-0.571v-118.286c-12-1.714-53.714-5.143-101.714-5.143-101.143 0-170.857 61.714-170.857 174.857v97.714h-114.286v132.571h114.286v340h-304c-90.857 0-164.571-73.714-164.571-164.571v-548.571c0-90.857 73.714-164.571 164.571-164.571h548.571z"
+
+        }                  ></path></svg
+
                 ><svg viewBox="0 0 1024 1024" class="header-icon20">
-                  <path
-                    d="M1024 226.4c-37.6 16.8-78.2 28-120.6 33 43.4-26 76.6-67.2 92.4-116.2-40.6 24-85.6 41.6-133.4 51-38.4-40.8-93-66.2-153.4-66.2-116 0-210 94-210 210 0 16.4 1.8 32.4 5.4 47.8-174.6-8.8-329.4-92.4-433-219.6-18 31-28.4 67.2-28.4 105.6 0 72.8 37 137.2 93.4 174.8-34.4-1-66.8-10.6-95.2-26.2 0 0.8 0 1.8 0 2.6 0 101.8 72.4 186.8 168.6 206-17.6 4.8-36.2 7.4-55.4 7.4-13.6 0-26.6-1.4-39.6-3.8 26.8 83.4 104.4 144.2 196.2 146-72 56.4-162.4 90-261 90-17 0-33.6-1-50.2-3 93.2 59.8 203.6 94.4 322.2 94.4 386.4 0 597.8-320.2 597.8-597.8 0-9.2-0.2-18.2-0.6-27.2 41-29.4 76.6-66.4 104.8-108.6z"
-                  ></path></svg
-                ><svg
+
+        .results.show {                  <path
+
+            display: block;                    d="M1024 226.4c-37.6 16.8-78.2 28-120.6 33 43.4-26 76.6-67.2 92.4-116.2-40.6 24-85.6 41.6-133.4 51-38.4-40.8-93-66.2-153.4-66.2-116 0-210 94-210 210 0 16.4 1.8 32.4 5.4 47.8-174.6-8.8-329.4-92.4-433-219.6-18 31-28.4 67.2-28.4 105.6 0 72.8 37 137.2 93.4 174.8-34.4-1-66.8-10.6-95.2-26.2 0 0.8 0 1.8 0 2.6 0 101.8 72.4 186.8 168.6 206-17.6 4.8-36.2 7.4-55.4 7.4-13.6 0-26.6-1.4-39.6-3.8 26.8 83.4 104.4 144.2 196.2 146-72 56.4-162.4 90-261 90-17 0-33.6-1-50.2-3 93.2 59.8 203.6 94.4 322.2 94.4 386.4 0 597.8-320.2 597.8-597.8 0-9.2-0.2-18.2-0.6-27.2 41-29.4 76.6-66.4 104.8-108.6z"
+
+            animation: fadeIn 0.5s ease;                  ></path></svg
+
+        }                ><svg
+
                   viewBox="0 0 877.7142857142857 1024"
-                  class="header-icon22"
-                >
-                  <path
-                    d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
-                  ></path>
-                </svg>
-              </div>
+
+        .question {                  class="header-icon22"
+
+            background: white;                >
+
+            padding: 15px;                  <path
+
+            border-radius: 8px;                    d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+            margin-bottom: 15px;                  ></path>
+
+            border-left: 4px solid var(--primary);                </svg>
+
+        }              </div>
+
             </div>
-          </div>
-          <div class="home-container01">
-            <div class="home-container02">
-              <h1 class="home-text">
-                Elevate Entertainment and Enjoyment with Our Tool.
+
+        .question-title {          </div>
+
+            font-weight: 600;          <div class="home-container01">
+
+            color: var(--dark);            <div class="home-container02">
+
+            margin-bottom: 10px;              <h1 class="home-text">
+
+        }                Elevate Entertainment and Enjoyment with Our Tool.
+
               </h1>
-              <span class="home-text01">
-                Kitty Tools is a straightforward and reliable open-source hack
-                for Kahoot that operates seamlessly in both web browsers and
-                desktop environments. The tool includes an answer bot utilizing
-                the Kahoot API, ensuring its continued functionality unless
-                there are significant changes to the Kahoot API by its
-                developers.
-              </span>
+
+        .answer {              <span class="home-text01">
+
+            padding: 8px 12px;                Kitty Tools is a straightforward and reliable open-source hack
+
+            background: var(--success);                for Kahoot that operates seamlessly in both web browsers and
+
+            color: white;                desktop environments. The tool includes an answer bot utilizing
+
+            border-radius: 6px;                the Kahoot API, ensuring its continued functionality unless
+
+            display: inline-block;                there are significant changes to the Kahoot API by its
+
+            margin-top: 5px;                developers.
+
+        }              </span>
+
             </div>
-            <img alt="image" src="public/gray-vector.svg" class="home-image" />
-            <img
-              alt="image"
-              src="public/white-vector.svg"
-              class="home-image1"
+
+        .loading {            <img alt="image" src="public/gray-vector.svg" class="home-image" />
+
+            text-align: center;            <img
+
+            padding: 40px;              alt="image"
+
+            display: none;              src="public/white-vector.svg"
+
+        }              class="home-image1"
+
             />
-          </div>
-        </div>
-        <div class="home-section1">
+
+        .loading.show {          </div>
+
+            display: block;        </div>
+
+        }        <div class="home-section1">
+
           <div class="home-container03">
-            <div class="home-container04">
-              <h6 class="home-text02">features</h6>
-              <h3 class="home-text03">'What tools are there?' You ask!</h3>
-              <span class="home-text04 TextLG">
-                Kitty Tools undergoes regular updates, incorporating new tools
-                and patches. Currently, its primary elements are outlined below.
-              </span>
-            </div>
-            <div class="home-cards-container">
+
+        .spinner {            <div class="home-container04">
+
+            border: 4px solid var(--light);              <h6 class="home-text02">features</h6>
+
+            border-top: 4px solid var(--primary);              <h3 class="home-text03">'What tools are there?' You ask!</h3>
+
+            border-radius: 50%;              <span class="home-text04 TextLG">
+
+            width: 40px;                Kitty Tools undergoes regular updates, incorporating new tools
+
+            height: 40px;                and patches. Currently, its primary elements are outlined below.
+
+            animation: spin 1s linear infinite;              </span>
+
+            margin: 0 auto 15px;            </div>
+
+        }            <div class="home-cards-container">
+
               <div class="home-card1">
-                <div class="home-container05">
-                  <svg viewBox="0 0 1024 1024" class="home-icon">
-                    <path
-                      d="M639.403 658.091l32 241.152-137.429-82.475c-13.269-7.851-29.995-8.363-43.904 0l-137.429 82.475 32.043-241.109c39.296 15.829 82.304 24.533 127.317 24.533s88.021-8.747 127.403-24.576zM654.165 554.283c-2.475 1.28-4.821 2.773-6.955 4.48-39.253 24.448-85.547 38.571-135.211 38.571-70.699 0-134.656-28.587-181.035-74.965s-74.965-110.336-74.965-181.035 28.587-134.656 74.965-181.035 110.336-74.965 181.035-74.965 134.656 28.587 181.035 74.965 74.965 110.336 74.965 181.035-28.587 134.656-74.965 181.035c-11.861 11.861-24.875 22.571-38.869 31.915zM304.64 612.48l-48.256 363.221c-3.115 23.339 13.312 44.8 36.693 47.915 9.984 1.323 19.669-0.939 27.563-5.717l191.36-114.816 191.403 114.816c20.224 12.117 46.421 5.589 58.539-14.635 5.205-8.661 6.955-18.389 5.717-27.563l-48.213-363.307c11.947-9.173 23.296-19.115 33.92-29.739 61.696-61.696 99.968-147.072 99.968-241.323s-38.272-179.627-99.968-241.365-147.115-99.968-241.365-99.968-179.627 38.272-241.365 99.968-99.968 147.115-99.968 241.365 38.272 179.627 99.968 241.365c10.667 10.667 22.016 20.608 33.963 29.781z"
+
+        @keyframes spin {                <div class="home-container05">
+
+            0% { transform: rotate(0deg); }                  <svg viewBox="0 0 1024 1024" class="home-icon">
+
+            100% { transform: rotate(360deg); }                    <path
+
+        }                      d="M639.403 658.091l32 241.152-137.429-82.475c-13.269-7.851-29.995-8.363-43.904 0l-137.429 82.475 32.043-241.109c39.296 15.829 82.304 24.533 127.317 24.533s88.021-8.747 127.403-24.576zM654.165 554.283c-2.475 1.28-4.821 2.773-6.955 4.48-39.253 24.448-85.547 38.571-135.211 38.571-70.699 0-134.656-28.587-181.035-74.965s-74.965-110.336-74.965-181.035 28.587-134.656 74.965-181.035 110.336-74.965 181.035-74.965 134.656 28.587 181.035 74.965 74.965 110.336 74.965 181.035-28.587 134.656-74.965 181.035c-11.861 11.861-24.875 22.571-38.869 31.915zM304.64 612.48l-48.256 363.221c-3.115 23.339 13.312 44.8 36.693 47.915 9.984 1.323 19.669-0.939 27.563-5.717l191.36-114.816 191.403 114.816c20.224 12.117 46.421 5.589 58.539-14.635 5.205-8.661 6.955-18.389 5.717-27.563l-48.213-363.307c11.947-9.173 23.296-19.115 33.92-29.739 61.696-61.696 99.968-147.072 99.968-241.323s-38.272-179.627-99.968-241.365-147.115-99.968-241.365-99.968-179.627 38.272-241.365 99.968-99.968 147.115-99.968 241.365 38.272 179.627 99.968 241.365c10.667 10.667 22.016 20.608 33.963 29.781z"
+
                     ></path>
-                  </svg>
-                </div>
-                <h6 class="home-text05 TextXL">Securing First Place</h6>
-                <span class="home-text06">
-                  Coming in first place has never been easyer! Using the fully automated answer hack you can be swiftly be propeld
-                  to the top position with impeccable scores.
+
+        .alert {                  </svg>
+
+            padding: 15px;                </div>
+
+            border-radius: 8px;                <h6 class="home-text05 TextXL">Securing First Place</h6>
+
+            margin-bottom: 20px;                <span class="home-text06">
+
+            display: none;                  Coming in first place has never been easyer! Using the fully automated answer hack you can be swiftly be propeld
+
+        }                  to the top position with impeccable scores.
+
                 </span>
-              </div>
-              <div class="home-card2">
-                <div class="home-container06">
-                  <svg viewBox="0 0 1097.142857142857 1024" class="home-icon02">
+
+        .alert.show {              </div>
+
+            display: block;              <div class="home-card2">
+
+            animation: fadeIn 0.3s ease;                <div class="home-container06">
+
+        }                  <svg viewBox="0 0 1097.142857142857 1024" class="home-icon02">
+
                     <path
-                      d="M731.429 859.429c0 9.714-8.571 18.286-18.286 18.286h-548.571c-21.143 0-18.286-22.286-18.286-36.571v-329.143h-109.714c-20 0-36.571-16.571-36.571-36.571 0-8.571 2.857-17.143 8.571-23.429l182.857-219.429c6.857-8 17.143-12.571 28-12.571s21.143 4.571 28 12.571l182.857 219.429c5.714 6.286 8.571 14.857 8.571 23.429 0 20-16.571 36.571-36.571 36.571h-109.714v219.429h329.143c5.143 0 10.857 2.286 14.286 6.286l91.429 109.714c2.286 3.429 4 8 4 12zM1097.143 621.714c0 8.571-2.857 17.143-8.571 23.429l-182.857 219.429c-6.857 8-17.143 13.143-28 13.143s-21.143-5.143-28-13.143l-182.857-219.429c-5.714-6.286-8.571-14.857-8.571-23.429 0-20 16.571-36.571 36.571-36.571h109.714v-219.429h-329.143c-5.143 0-10.857-2.286-14.286-6.857l-91.429-109.714c-2.286-2.857-4-7.429-4-11.429 0-9.714 8.571-18.286 18.286-18.286h548.571c21.143 0 18.286 22.286 18.286 36.571v329.143h109.714c20 0 36.571 16.571 36.571 36.571z"
-                    ></path>
-                  </svg>
-                </div>
-                <h6 class="home-text07 TextXL">Compatible With All Devices!</h6>
+
+        .alert-success {                      d="M731.429 859.429c0 9.714-8.571 18.286-18.286 18.286h-548.571c-21.143 0-18.286-22.286-18.286-36.571v-329.143h-109.714c-20 0-36.571-16.571-36.571-36.571 0-8.571 2.857-17.143 8.571-23.429l182.857-219.429c6.857-8 17.143-12.571 28-12.571s21.143 4.571 28 12.571l182.857 219.429c5.714 6.286 8.571 14.857 8.571 23.429 0 20-16.571 36.571-36.571 36.571h-109.714v219.429h329.143c5.143 0 10.857 2.286 14.286 6.286l91.429 109.714c2.286 3.429 4 8 4 12zM1097.143 621.714c0 8.571-2.857 17.143-8.571 23.429l-182.857 219.429c-6.857 8-17.143 13.143-28 13.143s-21.143-5.143-28-13.143l-182.857-219.429c-5.714-6.286-8.571-14.857-8.571-23.429 0-20 16.571-36.571 36.571-36.571h109.714v-219.429h-329.143c-5.143 0-10.857-2.286-14.286-6.857l-91.429-109.714c-2.286-2.857-4-7.429-4-11.429 0-9.714 8.571-18.286 18.286-18.286h548.571c21.143 0 18.286 22.286 18.286 36.571v329.143h109.714c20 0 36.571 16.571 36.571 36.571z"
+
+            background: #d1fae5;                    ></path>
+
+            color: #065f46;                  </svg>
+
+            border-left: 4px solid var(--success);                </div>
+
+        }                <h6 class="home-text07 TextXL">Compatible With All Devices!</h6>
+
                 <span class="home-text08">
-                  <span>
-                    Compatible with all devices! From Desktop to Mobile with LITE, you can now use this client on mostly any device! (I-phone version in development!)
-                  </span>
-                  <br />
-                </span>
+
+        .alert-error {                  <span>
+
+            background: #fee2e2;                    Compatible with all devices! From Desktop to Mobile with LITE, you can now use this client on mostly any device! (I-phone version in development!)
+
+            color: #991b1b;                  </span>
+
+            border-left: 4px solid var(--danger);                  <br />
+
+        }                </span>
+
               </div>
-              <div class="home-card3">
-                <div class="home-container07">
-                  <svg viewBox="0 0 1024 1024" class="home-icon04">
-                    <path
-                      d="M636 938h-6q-92-24-158-90-38-38-65-103t-27-119q0-52 38-89t92-37 93 37 39 89q0 34 25 58t63 24 64-24 26-58q0-120-91-206t-219-86q-92 0-168 47t-114 125q-24 50-24 120 0 80 28 154 6 20-14 26t-26-12q-32-82-32-168 0-78 30-138 42-90 129-144t191-54q146 0 249 99t103 237q0 52-39 88t-93 36-92-36-38-88q0-34-26-59t-64-25-63 25-25 59q0 112 80 192 56 56 140 78 18 2 14 26-4 16-20 16zM530 626q0 74 55 128t137 54q4 0 18-2t23-2 18 3 11 13q4 22-18 26-24 4-52 4-80 0-132-38-102-70-102-186 0-22 22-22 20 0 20 22zM416 930q-8 0-14-6-54-54-86-114-46-80-46-184 0-94 71-162t171-68 171 68 71 162q0 20-22 20t-22-20q0-78-58-133t-140-55-140 55-58 133q0 96 38 164 26 46 80 104 16 14 0 30-6 6-16 6zM150 414q-22 0-22-20 0-4 4-12 64-92 160-140 100-52 220-52t220 52q98 48 160 138 4 8 4 12 0 14-16 20t-24-8q-60-82-144-124-92-46-200-47t-200 47q-90 46-146 126-6 8-16 8zM760 190q-8 0-10-2-118-60-238-60-130 0-238 60-10 6-20 0t-10-18q0-14 10-20 116-64 258-64 130 0 258 64 18 10 8 28-8 12-18 12z"
+
+        .alert-warning {              <div class="home-card3">
+
+            background: #fef3c7;                <div class="home-container07">
+
+            color: #92400e;                  <svg viewBox="0 0 1024 1024" class="home-icon04">
+
+            border-left: 4px solid var(--warning);                    <path
+
+        }                      d="M636 938h-6q-92-24-158-90-38-38-65-103t-27-119q0-52 38-89t92-37 93 37 39 89q0 34 25 58t63 24 64-24 26-58q0-120-91-206t-219-86q-92 0-168 47t-114 125q-24 50-24 120 0 80 28 154 6 20-14 26t-26-12q-32-82-32-168 0-78 30-138 42-90 129-144t191-54q146 0 249 99t103 237q0 52-39 88t-93 36-92-36-38-88q0-34-26-59t-64-25-63 25-25 59q0 112 80 192 56 56 140 78 18 2 14 26-4 16-20 16zM530 626q0 74 55 128t137 54q4 0 18-2t23-2 18 3 11 13q4 22-18 26-24 4-52 4-80 0-132-38-102-70-102-186 0-22 22-22 20 0 20 22zM416 930q-8 0-14-6-54-54-86-114-46-80-46-184 0-94 71-162t171-68 171 68 71 162q0 20-22 20t-22-20q0-78-58-133t-140-55-140 55-58 133q0 96 38 164 26 46 80 104 16 14 0 30-6 6-16 6zM150 414q-22 0-22-20 0-4 4-12 64-92 160-140 100-52 220-52t220 52q98 48 160 138 4 8 4 12 0 14-16 20t-24-8q-60-82-144-124-92-46-200-47t-200 47q-90 46-146 126-6 8-16 8zM760 190q-8 0-10-2-118-60-238-60-130 0-238 60-10 6-20 0t-10-18q0-14 10-20 116-64 258-64 130 0 258 64 18 10 8 28-8 12-18 12z"
+
                     ></path>
-                  </svg>
-                </div>
-                <h6 class="home-text11 TextXL">Looks Official</h6>
-                <span class="home-text12">
-                  Gives the appearance of an official Kahoot client, eliminating
-                  concerns about your identity being sniffed out.
+
+        .info-card {                  </svg>
+
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));                </div>
+
+            padding: 20px;                <h6 class="home-text11 TextXL">Looks Official</h6>
+
+            border-radius: 8px;                <span class="home-text12">
+
+            margin-bottom: 20px;                  Gives the appearance of an official Kahoot client, eliminating
+
+        }                  concerns about your identity being sniffed out.
+
                 </span>
-              </div>
-            </div>
-          </div>
-          <img alt="image" src="public/white-vector.svg" class="home-image2" />
+
+        .info-card h3 {              </div>
+
+            color: var(--primary);            </div>
+
+            margin-bottom: 10px;          </div>
+
+        }          <img alt="image" src="public/white-vector.svg" class="home-image2" />
+
         </div>
-        <div class="home-section2">
-          <div class="home-container08">
-            <div class="label-container">
-              <h6 class="label-text"><span>Open Source?</span></h6>
+
+        .info-card p {        <div class="home-section2">
+
+            color: var(--text);          <div class="home-container08">
+
+            line-height: 1.6;            <div class="label-container">
+
+        }              <h6 class="label-text"><span>Open Source?</span></h6>
+
             </div>
-            <h2 class="home-text13 Text2XL">
-              <span class="home-text14">
-                Absolutely! We are entirely open source.
-              </span>
-              <br class="home-text15" />
-            </h2>
+
+        .github-link {            <h2 class="home-text13 Text2XL">
+
+            text-align: center;              <span class="home-text14">
+
+            margin-top: 20px;                Absolutely! We are entirely open source.
+
+            padding-top: 20px;              </span>
+
+            border-top: 1px solid var(--light);              <br class="home-text15" />
+
+        }            </h2>
+
             <span class="home-text16 Content">
-              We highly value contributions from individuals who enhance the
-              project by introducing new features and addressing bugs. That's
-              why we've opted to make the project open source.
-            </span>
-          </div>
-          <div class="home-container09">
-            <h3 class="home-text17">Contributers</h3>
-            <span class="home-text18">
+
+        .github-link a {              We highly value contributions from individuals who enhance the
+
+            color: var(--primary);              project by introducing new features and addressing bugs. That's
+
+            text-decoration: none;              why we've opted to make the project open source.
+
+            font-weight: 600;            </span>
+
+            display: inline-flex;          </div>
+
+            align-items: center;          <div class="home-container09">
+
+            gap: 8px;            <h3 class="home-text17">Contributers</h3>
+
+        }            <span class="home-text18">
+
               These are people who have been helpful and supported the project,
-              making it grow.
-            </span>
-          </div>
+
+        .github-link a:hover {              making it grow.
+
+            text-decoration: underline;            </span>
+
+        }          </div>
+
           <div class="home-team">
-            <div class="home-container10">
-              <div class="home-container11">
-                <div class="member-details-container">
-                  <img
+
+        @media (max-width: 768px) {            <div class="home-container10">
+
+            .container {              <div class="home-container11">
+
+                padding: 20px;                <div class="member-details-container">
+
+            }                  <img
+
                     alt="image"
-                    src="public/pfp1-200h.png"
-                    class="member-details-image"
-                  />
+
+            .header h1 {                    src="public/pfp1-200h.png"
+
+                font-size: 2em;                    class="member-details-image"
+
+            }                  />
+
                   <h1 class="member-details-text TextXL">
-                    <span>CPScript</span>
-                  </h1>
-                  <h1 class="member-details-text1 TextSM">
+
+            .tabs {                    <span>CPScript</span>
+
+                flex-direction: column;                  </h1>
+
+            }                  <h1 class="member-details-text1 TextSM">
+
                     <span>Project Lead</span>
-                  </h1>
-                </div>
-                <div class="home-container12">
-                  <a
+
+            .tab {                  </h1>
+
+                border-bottom: none;                </div>
+
+                border-left: 3px solid transparent;                <div class="home-container12">
+
+            }                  <a
+
                     href="https://github.com/CPScript"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    class="home-link"
-                  >
-                    <div class="home-container13">
-                      <svg
-                        viewBox="0 0 877.7142857142857 1024"
-                        class="home-icon06"
-                      >
-                        <path
-                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
-                        ></path>
-                      </svg>
+
+            .tab.active {                    target="_blank"
+
+                border-left-color: var(--primary);                    rel="noreferrer noopener"
+
+                border-bottom-color: transparent;                    class="home-link"
+
+            }                  >
+
+        }                    <div class="home-container13">
+
+    </style>                      <svg
+
+</head>                        viewBox="0 0 877.7142857142857 1024"
+
+<body>                        class="home-icon06"
+
+    <div class="container">                      >
+
+        <div class="header">                        <path
+
+            <h1>🎯 Kahoot Helper</h1>                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+            <p>Herramienta educativa para obtener respuestas de Kahoot</p>                        ></path>
+
+        </div>                      </svg>
+
                     </div>
-                  </a>
-                </div>
-              </div>
-              <div class="home-container14">
-                <div class="member-details-container">
+
+        <div class="tabs">                  </a>
+
+            <button class="tab active" onclick="switchTab('answers')">📝 Obtener Respuestas</button>                </div>
+
+            <button class="tab" onclick="switchTab('info')">ℹ️ Información</button>              </div>
+
+            <button class="tab" onclick="switchTab('howto')">📖 Cómo Usar</button>              <div class="home-container14">
+
+        </div>                <div class="member-details-container">
+
                   <img
-                    alt="image"
-                    src="public/pfp2-200h.png"
-                    class="member-details-image"
-                  />
-                  <h1 class="member-details-text TextXL">
+
+        <!-- Tab: Obtener Respuestas -->                    alt="image"
+
+        <div id="answers-tab" class="tab-content active">                    src="public/pfp2-200h.png"
+
+            <div class="alert alert-warning show">                    class="member-details-image"
+
+                <strong>⚠️ Importante:</strong> Esta herramienta es solo para fines educativos. Úsala responsablemente y con permiso.                  />
+
+            </div>                  <h1 class="member-details-text TextXL">
+
                     <span>Kira Kenjiro</span>
-                  </h1>
-                  <h1 class="member-details-text1 TextSM">
-                    <span>Web &amp; Hybrid Dev</span>
-                  </h1>
+
+            <div class="input-group">                  </h1>
+
+                <label for="quiz-id">Quiz ID o Game PIN</label>                  <h1 class="member-details-text1 TextSM">
+
+                <input type="text" id="quiz-id" placeholder="Ejemplo: 0123456789 o 123456">                    <span>Web &amp; Hybrid Dev</span>
+
+            </div>                  </h1>
+
                 </div>
-                <div class="home-container15">
-                  <a
-                    href="https://github.com/KiraKenjiro"
+
+            <button class="btn btn-primary" onclick="getAnswers()">                <div class="home-container15">
+
+                🔍 Obtener Respuestas                  <a
+
+            </button>                    href="https://github.com/KiraKenjiro"
+
                     target="_blank"
-                    rel="noreferrer noopener"
-                    class="home-link1"
-                  >
-                    <div class="home-container16">
+
+            <div class="loading" id="loading">                    rel="noreferrer noopener"
+
+                <div class="spinner"></div>                    class="home-link1"
+
+                <p>Obteniendo respuestas...</p>                  >
+
+            </div>                    <div class="home-container16">
+
                       <svg
-                        viewBox="0 0 877.7142857142857 1024"
+
+            <div class="alert" id="alert"></div>                        viewBox="0 0 877.7142857142857 1024"
+
                         class="home-icon08"
-                      >
-                        <path
+
+            <div class="results" id="results"></div>                      >
+
+        </div>                        <path
+
                           d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-              </div>
+
+        <!-- Tab: Información -->                        ></path>
+
+        <div id="info-tab" class="tab-content">                      </svg>
+
+            <div class="info-card">                    </div>
+
+                <h3>📚 Sobre Kitty Tools</h3>                  </a>
+
+                <p>Kitty Tools es una suite de utilidades para Kahoot desarrollada por CPScript y contribuidores de la comunidad.</p>                </div>
+
+            </div>              </div>
+
               <div class="home-container17">
-                <div class="member-details-container">
-                  <img
-                    alt="image"
-                    src="public/pfp3-200h.png"
-                    class="member-details-image"
-                  />
-                  <h1 class="member-details-text TextXL">
-                    <span>Cheepling</span>
+
+            <div class="info-card">                <div class="member-details-container">
+
+                <h3>👥 Contribuidores</h3>                  <img
+
+                <p>                    alt="image"
+
+                    • CPScript (Desarrollador principal)<br>                    src="public/pfp3-200h.png"
+
+                    • @Ccode-lang<br>                    class="member-details-image"
+
+                    • @xTobyPlayZ<br>                  />
+
+                    • @cheepling<br>                  <h1 class="member-details-text TextXL">
+
+                    • @Zacky2613<br>                    <span>Cheepling</span>
+
+                    • @KiraKenjiro                  </h1>
+
+                </p>                  <h1 class="member-details-text1 TextSM">
+
+            </div>                    <span>Contributor</span>
+
                   </h1>
-                  <h1 class="member-details-text1 TextSM">
-                    <span>Contributor</span>
-                  </h1>
-                </div>
-                <div class="home-container18">
-                  <a
-                    href="https://github.com/cheepling"
-                    target="_blank"
+
+            <div class="info-card">                </div>
+
+                <h3>📄 Licencia</h3>                <div class="home-container18">
+
+                <p>Software educativo de código abierto. Use bajo su responsabilidad.</p>                  <a
+
+            </div>                    href="https://github.com/cheepling"
+
+        </div>                    target="_blank"
+
                     rel="noreferrer noopener"
-                    class="home-link2"
-                  >
-                    <div class="home-container19">
-                      <svg
-                        viewBox="0 0 877.7142857142857 1024"
-                        class="home-icon10"
-                      >
-                        <path
-                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+        <!-- Tab: Cómo Usar -->                    class="home-link2"
+
+        <div id="howto-tab" class="tab-content">                  >
+
+            <div class="info-card">                    <div class="home-container19">
+
+                <h3>🎮 Cómo Obtener Respuestas</h3>                      <svg
+
+                <p>                        viewBox="0 0 877.7142857142857 1024"
+
+                    <strong>Método 1 - Quiz ID:</strong><br>                        class="home-icon10"
+
+                    1. Encuentra el Quiz ID en la URL del Kahoot (ejemplo: kahoot.it/challenge/0123456789)<br>                      >
+
+                    2. Ingresa el Quiz ID en el campo de arriba<br>                        <path
+
+                    3. Haz clic en "Obtener Respuestas"<br><br>                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
                         ></path>
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="home-container20">
+
+                    <strong>Método 2 - Game PIN:</strong><br>                      </svg>
+
+                    1. Cuando el profesor inicie el juego, verás un PIN de 6 dígitos<br>                    </div>
+
+                    2. Ingresa ese PIN en el campo de arriba<br>                  </a>
+
+                    3. Haz clic en "Obtener Respuestas"                </div>
+
+                </p>              </div>
+
+            </div>              <div class="home-container20">
+
                 <div class="member-details-container">
-                  <img
-                    alt="image"
-                    src="public/pfp4-200h.png"
-                    class="member-details-image"
-                  />
-                  <h1 class="member-details-text TextXL">
-                    <span>Zacky2613</span>
+
+            <div class="info-card">                  <img
+
+                <h3>⚠️ Nota Importante</h3>                    alt="image"
+
+                <p>                    src="public/pfp4-200h.png"
+
+                    Esta herramienta es para fines educativos únicamente. El uso indebido puede violar los términos de servicio de Kahoot.                     class="member-details-image"
+
+                    Úsala solo en entornos de prueba o con permiso explícito del instructor.                  />
+
+                </p>                  <h1 class="member-details-text TextXL">
+
+            </div>                    <span>Zacky2613</span>
+
                   </h1>
-                  <h1 class="member-details-text1 TextSM">
-                    <span>Contributor</span>
-                  </h1>
-                </div>
-                <div class="home-container21">
-                  <a
-                    href="https://github.com/Zacky2613"
-                    target="_blank"
+
+            <div class="info-card">                  <h1 class="member-details-text1 TextSM">
+
+                <h3>🔒 Privacidad</h3>                    <span>Contributor</span>
+
+                <p>                  </h1>
+
+                    Todo el procesamiento se realiza en tu navegador. No se envía información a servidores externos excepto                 </div>
+
+                    las solicitudes directas a la API pública de Kahoot.                <div class="home-container21">
+
+                </p>                  <a
+
+            </div>                    href="https://github.com/Zacky2613"
+
+        </div>                    target="_blank"
+
                     rel="noreferrer noopener"
-                    class="home-link3"
-                  >
-                    <div class="home-container22">
-                      <svg
-                        viewBox="0 0 877.7142857142857 1024"
-                        class="home-icon12"
-                      >
-                        <path
-                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+        <div class="github-link">                    class="home-link3"
+
+            <a href="https://github.com/CPScript/Kitty-Tools" target="_blank" rel="noopener">                  >
+
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">                    <div class="home-container22">
+
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>                      <svg
+
+                </svg>                        viewBox="0 0 877.7142857142857 1024"
+
+                Ver código fuente en GitHub                        class="home-icon12"
+
+            </a>                      >
+
+        </div>                        <path
+
+    </div>                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
                         ></path>
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="home-container23">
+
+    <script>                      </svg>
+
+        function switchTab(tabName) {                    </div>
+
+            // Ocultar todos los contenidos                  </a>
+
+            document.querySelectorAll('.tab-content').forEach(content => {                </div>
+
+                content.classList.remove('active');              </div>
+
+            });              <div class="home-container23">
+
                 <div class="member-details-container">
-                  <img
-                    alt="image"
-                    src="public/pfp5-200h.png"
-                    class="member-details-image"
+
+            // Desactivar todas las tabs                  <img
+
+            document.querySelectorAll('.tab').forEach(tab => {                    alt="image"
+
+                tab.classList.remove('active');                    src="public/pfp5-200h.png"
+
+            });                    class="member-details-image"
+
                   />
-                  <h1 class="member-details-text TextXL">
-                    <span>Ccode-lang</span>
-                  </h1>
-                  <h1 class="member-details-text1 TextSM">
+
+            // Activar la tab seleccionada                  <h1 class="member-details-text TextXL">
+
+            document.getElementById(tabName + '-tab').classList.add('active');                    <span>Ccode-lang</span>
+
+            event.target.classList.add('active');                  </h1>
+
+        }                  <h1 class="member-details-text1 TextSM">
+
                     <span>Contributor</span>
-                  </h1>
-                </div>
-                <div class="home-container24">
-                  <a
-                    href="https://github.com/Ccode-lang"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    class="home-link4"
+
+        function showAlert(message, type) {                  </h1>
+
+            const alert = document.getElementById('alert');                </div>
+
+            alert.className = `alert alert-${type} show`;                <div class="home-container24">
+
+            alert.textContent = message;                  <a
+
+            setTimeout(() => {                    href="https://github.com/Ccode-lang"
+
+                alert.classList.remove('show');                    target="_blank"
+
+            }, 5000);                    rel="noreferrer noopener"
+
+        }                    class="home-link4"
+
                   >
-                    <div class="home-container25">
-                      <svg
-                        viewBox="0 0 877.7142857142857 1024"
-                        class="home-icon14"
-                      >
-                        <path
-                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+        async function getAnswers() {                    <div class="home-container25">
+
+            const quizId = document.getElementById('quiz-id').value.trim();                      <svg
+
+                                    viewBox="0 0 877.7142857142857 1024"
+
+            if (!quizId) {                        class="home-icon14"
+
+                showAlert('Por favor, ingresa un Quiz ID o Game PIN', 'error');                      >
+
+                return;                        <path
+
+            }                          d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
                         ></path>
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
+
+            const loading = document.getElementById('loading');                      </svg>
+
+            const results = document.getElementById('results');                    </div>
+
+                              </a>
+
+            loading.classList.add('show');                </div>
+
+            results.classList.remove('show');              </div>
+
+            results.innerHTML = '';            </div>
+
           </div>
-        </div>
-        <img alt="image" src="public/gray-vector.svg" class="home-image3" />
-        <div class="footer-container">
-          <div class="footer-container1">
-            <div class="footer-container2">
-              <h1 class="footer-text TextXL">Find me here!</h1>
-              <span class="footer-text1">
-                Explore my additional projects on my GitHub profile, and don't
-                forget to give them a star.
-              </span>
+
+            try {        </div>
+
+                let questions = [];        <img alt="image" src="public/gray-vector.svg" class="home-image3" />
+
+                        <div class="footer-container">
+
+                // Intentar primero como Quiz ID          <div class="footer-container1">
+
+                if (quizId.length > 6) {            <div class="footer-container2">
+
+                    questions = await fetchByQuizId(quizId);              <h1 class="footer-text TextXL">Find me here!</h1>
+
+                } else {              <span class="footer-text1">
+
+                    // Si es corto, es probablemente un PIN                Explore my additional projects on my GitHub profile, and don't
+
+                    questions = await fetchByPin(quizId);                forget to give them a star.
+
+                }              </span>
+
               <div class="footer-container3">
-                <a
-                  href="https://github.com/CPScript/Kitty-Tools"
-                  target="_blank"
+
+                if (questions.length === 0) {                <a
+
+                    throw new Error('No se encontraron preguntas para este ID/PIN');                  href="https://github.com/CPScript/Kitty-Tools"
+
+                }                  target="_blank"
+
                   rel="noreferrer noopener"
-                  class="footer-link"
-                >
-                  <div class="footer-container4">
-                    <svg
-                      viewBox="0 0 877.7142857142857 1024"
-                      class="footer-icon"
-                    >
-                      <path
-                        d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
+                displayResults(questions);                  class="footer-link"
+
+                showAlert(`✅ Se encontraron ${questions.length} preguntas`, 'success');                >
+
+            } catch (error) {                  <div class="footer-container4">
+
+                showAlert(`❌ Error: ${error.message}`, 'error');                    <svg
+
+                console.error('Error:', error);                      viewBox="0 0 877.7142857142857 1024"
+
+            } finally {                      class="footer-icon"
+
+                loading.classList.remove('show');                    >
+
+            }                      <path
+
+        }                        d="M438.857 73.143c242.286 0 438.857 196.571 438.857 438.857 0 193.714-125.714 358.286-300 416.571-22.286 4-30.286-9.714-30.286-21.143 0-14.286 0.571-61.714 0.571-120.571 0-41.143-13.714-67.429-29.714-81.143 97.714-10.857 200.571-48 200.571-216.571 0-48-17.143-86.857-45.143-117.714 4.571-11.429 19.429-56-4.571-116.571-36.571-11.429-120.571 45.143-120.571 45.143-34.857-9.714-72.571-14.857-109.714-14.857s-74.857 5.143-109.714 14.857c0 0-84-56.571-120.571-45.143-24 60.571-9.143 105.143-4.571 116.571-28 30.857-45.143 69.714-45.143 117.714 0 168 102.286 205.714 200 216.571-12.571 11.429-24 30.857-28 58.857-25.143 11.429-89.143 30.857-127.429-36.571-24-41.714-67.429-45.143-67.429-45.143-42.857-0.571-2.857 26.857-2.857 26.857 28.571 13.143 48.571 64 48.571 64 25.714 78.286 148 52 148 52 0 36.571 0.571 70.857 0.571 81.714 0 11.429-8 25.143-30.286 21.143-174.286-58.286-300-222.857-300-416.571 0-242.286 196.571-438.857 438.857-438.857zM166.286 703.429c1.143-2.286-0.571-5.143-4-6.857-3.429-1.143-6.286-0.571-7.429 1.143-1.143 2.286 0.571 5.143 4 6.857 2.857 1.714 6.286 1.143 7.429-1.143zM184 722.857c2.286-1.714 1.714-5.714-1.143-9.143-2.857-2.857-6.857-4-9.143-1.714-2.286 1.714-1.714 5.714 1.143 9.143 2.857 2.857 6.857 4 9.143 1.714zM201.143 748.571c2.857-2.286 2.857-6.857 0-10.857-2.286-4-6.857-5.714-9.714-3.429-2.857 1.714-2.857 6.286 0 10.286s7.429 5.714 9.714 4zM225.143 772.571c2.286-2.286 1.143-7.429-2.286-10.857-4-4-9.143-4.571-11.429-1.714-2.857 2.286-1.714 7.429 2.286 10.857 4 4 9.143 4.571 11.429 1.714zM257.714 786.857c1.143-3.429-2.286-7.429-7.429-9.143-4.571-1.143-9.714 0.571-10.857 4s2.286 7.429 7.429 8.571c4.571 1.714 9.714 0 10.857-3.429zM293.714 789.714c0-4-4.571-6.857-9.714-6.286-5.143 0-9.143 2.857-9.143 6.286 0 4 4 6.857 9.714 6.286 5.143 0 9.143-2.857 9.143-6.286zM326.857 784c-0.571-3.429-5.143-5.714-10.286-5.143-5.143 1.143-8.571 4.571-8 8.571 0.571 3.429 5.143 5.714 10.286 4.571s8.571-4.571 8-8z"
+
                       ></path>
-                    </svg>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="footer-container5">
-              <div class="footer-container6">
-                <span class="footer-text2 TextXS">USEFUL LINK</span>
+
+        async function fetchByQuizId(quizId) {                    </svg>
+
+            // Intentar obtener el quiz directamente por ID                  </div>
+
+            const response = await fetch(`https://kahoot.it/rest/kahoots/${quizId}`, {                </a>
+
+                method: 'GET',              </div>
+
+                headers: {            </div>
+
+                    'Accept': 'application/json',            <div class="footer-container5">
+
+                }              <div class="footer-container6">
+
+            });                <span class="footer-text2 TextXS">USEFUL LINK</span>
+
                 <a
-                  href="https://github.com/CPScript/Kitty-Tools"
-                  target="_blank"
-                  rel="noreferrer noopener"
+
+            if (!response.ok) {                  href="https://github.com/CPScript/Kitty-Tools"
+
+                throw new Error('Quiz no encontrado o no es público');                  target="_blank"
+
+            }                  rel="noreferrer noopener"
+
                   class="footer-link1 TextSM"
-                >
-                  Github
-                </a>
+
+            const data = await response.json();                >
+
+            return parseQuestions(data);                  Github
+
+        }                </a>
+
               </div>
-              <div class="footer-container7">
-                <span class="footer-text3 TextXS">OTHER RESOURCES</span>
+
+        async function fetchByPin(pin) {              <div class="footer-container7">
+
+            // Para obtener información del juego por PIN                <span class="footer-text3 TextXS">OTHER RESOURCES</span>
+
+            // Nota: Esto requiere que el juego esté activo                <a
+
+            try {                  href="https://github.com/CPScript/Kitty-Tools?tab=CC0-1.0-1-ov-file"
+
+                const response = await fetch(`https://kahoot.it/reserve/session/${pin}/?`, {                  target="_blank"
+
+                    method: 'GET',                  rel="noreferrer noopener"
+
+                    headers: {                  class="footer-link2 TextSM"
+
+                        'Accept': 'application/json',                >
+
+                    }                  License
+
+                });                </a>
+
                 <a
-                  href="https://github.com/CPScript/Kitty-Tools?tab=CC0-1.0-1-ov-file"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="footer-link2 TextSM"
-                >
-                  License
-                </a>
-                <a
-                  href="https://github.com/CPScript/Kitty-Tools/blob/main/LICENSE"
-                  target="_blank"
-                  rel="noreferrer noopener"
+
+                if (!response.ok) {                  href="https://github.com/CPScript/Kitty-Tools/blob/main/LICENSE"
+
+                    throw new Error('PIN no válido o juego no activo');                  target="_blank"
+
+                }                  rel="noreferrer noopener"
+
                   class="footer-link3 TextSM"
-                >
-                  Code of Conduct
-                </a>
-                <a
-                  href="https://github.com/CPScript/Kitty-Tools/blob/main/CODE_OF_CONDUCT.md"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="footer-link4 TextSM"
-                >
-                  Security
-                </a>
+
+                const data = await response.json();                >
+
+                                  Code of Conduct
+
+                if (data.quizId) {                </a>
+
+                    return await fetchByQuizId(data.quizId);                <a
+
+                }                  href="https://github.com/CPScript/Kitty-Tools/blob/main/CODE_OF_CONDUCT.md"
+
+                                  target="_blank"
+
+                throw new Error('No se pudo obtener el Quiz ID del PIN');                  rel="noreferrer noopener"
+
+            } catch (error) {                  class="footer-link4 TextSM"
+
+                throw new Error('PIN no válido o el juego no está activo. Intenta con el Quiz ID completo.');                >
+
+            }                  Security
+
+        }                </a>
+
               </div>
-            </div>
-          </div>
-          <div class="footer-container8"></div>
-          <span class="footer-text4 TextSM">Copyright © 2023-2024</span>
-        </div>
-      </div>
+
+        function parseQuestions(data) {            </div>
+
+            const questions = [];          </div>
+
+                      <div class="footer-container8"></div>
+
+            if (!data.questions || !Array.isArray(data.questions)) {          <span class="footer-text4 TextSM">Copyright © 2023-2024</span>
+
+                throw new Error('Formato de datos inválido');        </div>
+
+            }      </div>
+
     </div>
-    <script src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
-  </body>
+
+            data.questions.forEach((q, index) => {    <script src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
+
+                const question = {  </body>
+
+                    number: index + 1,</html>
+
+                    question: q.question || 'Pregunta sin título',
+                    type: q.type || 'quiz',
+                    answers: []
+                };
+
+                if (q.choices && Array.isArray(q.choices)) {
+                    q.choices.forEach((choice, choiceIndex) => {
+                        if (choice.correct) {
+                            question.answers.push({
+                                text: choice.answer || `Opción ${choiceIndex + 1}`,
+                                index: choiceIndex
+                            });
+                        }
+                    });
+                }
+
+                questions.push(question);
+            });
+
+            return questions;
+        }
+
+        function displayResults(questions) {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h3 style="margin-bottom: 15px; color: var(--dark);">📊 Respuestas Encontradas</h3>';
+
+            questions.forEach(q => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const questionTitle = document.createElement('div');
+                questionTitle.className = 'question-title';
+                questionTitle.textContent = `${q.number}. ${q.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                if (q.answers.length > 0) {
+                    q.answers.forEach(answer => {
+                        const answerSpan = document.createElement('span');
+                        answerSpan.className = 'answer';
+                        answerSpan.textContent = `✓ ${answer.text}`;
+                        questionDiv.appendChild(answerSpan);
+                    });
+                } else {
+                    const noAnswer = document.createElement('div');
+                    noAnswer.style.color = 'var(--warning)';
+                    noAnswer.textContent = '⚠️ No hay respuesta correcta marcada o es de tipo abierto';
+                    questionDiv.appendChild(noAnswer);
+                }
+
+                results.appendChild(questionDiv);
+            });
+
+            results.classList.add('show');
+        }
+
+        // Permitir enviar con Enter
+        document.getElementById('quiz-id').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getAnswers();
+            }
+        });
+    </script>
+</body>
 </html>
